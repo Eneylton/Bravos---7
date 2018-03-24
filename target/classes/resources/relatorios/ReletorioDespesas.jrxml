@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transacao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="40f6e930-e38c-475d-8690-16eee3913315">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="2045"/>
+	<property name="ireport.y" value="1251"/>
+	<parameter name="idAuto" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+    (a.c) - (b.d) as totalGeral,
+    financeiro.id AS id,
+    financeiro.valor AS valor,
+    financeiro.data AS data,
+    CASE
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 5 THEN '05 DIAS PARA O PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 4 THEN '04 DIAS PARA O PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 3 THEN '03 DIAS PARA O PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 2 THEN '02 DIAS PARA O PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 1 THEN 'FALTA UM DIA PARA O PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) = 0 THEN 'DIA DO PAGAMENTO'
+        WHEN DATEDIFF(financeiro.data, CURDATE()) <= 0 THEN 'ATRASADO'
+        ELSE 'AQUARDANDO PAGAMENTO'
+    END AS dia,
+    financeiro.valorExtenso AS valorExtenso,
+    autoescola.razao AS `usuario.autoescola.razao`,
+    autoescola.cnpj AS `usuario.autoescola.cnpj`,
+    autoescola.logo AS `usuario.autoescola.logo`,
+    autoescola.nome AS `usuario.autoescola.nome`,
+    usuario.nomeCompleto AS `usuario.nomeCompleto`,
+    servico.descricao AS `aluno.servico.descricao`,
+    aluno.nome AS `aluno.nome`,
+    categoria.descricao AS `categoria.descricao`
+FROM (SELECT
+    IFNULL(SUM(REPLACE(fin5.valor, ",", ".")), 0) AS c
+FROM
+    financeiro AS fin5
+        INNER JOIN
+    usuario AS us5 ON (us5.id = fin5.usuario_id)
+    Inner Join autoescola AS aut5 ON (us5.autoescola_id = aut5.id)
+WHERE
+    fin5.flag = '1' AND fin5.tipo = '1' AND us5.autoescola_id = $P{idAuto}) as a,
+     (SELECT
+    IFNULL(SUM(REPLACE(fin4.valor, ",", ".")), 0) AS d
+FROM
+    financeiro AS fin4
+        INNER JOIN
+    usuario AS us4 ON (us4.id = fin4.usuario_id)
+    Inner Join autoescola AS aut4 ON (us4.autoescola_id = aut4.id)
+WHERE
+    fin4.flag = '1' AND fin4.tipo = '2' AND us4.autoescola_id = $P{idAuto}) as b
+
+    INNER JOIN
+    financeiro AS financeiro
+        INNER JOIN
+    usuario AS usuario ON (usuario.id = financeiro.usuario_id)
+        INNER JOIN
+    autoescola AS autoescola ON (usuario.autoescola_id = autoescola.id)
+        INNER JOIN
+    aluno AS aluno ON (financeiro.aluno_id = aluno.id)
+        INNER JOIN
+    categoria AS categoria ON (financeiro.categoria_id = categoria.id)
+        LEFT JOIN
+    servico AS servico ON (servico.id = aluno.servico_id)
+WHERE
+    usuario.autoescola_id = $P{idAuto} AND financeiro.flag = '1' AND financeiro.tipo='2']]>
+	</queryString>
+	<field name="totalGeral" class="java.lang.Double"/>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dia" class="java.lang.String"/>
+	<field name="valorExtenso" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario.autoescola.razao" class="java.lang.String"/>
+	<field name="usuario.autoescola.cnpj" class="java.lang.String"/>
+	<field name="usuario.autoescola.logo" class="java.lang.String"/>
+	<field name="usuario.autoescola.nome" class="java.lang.String"/>
+	<field name="usuario.nomeCompleto" class="java.lang.String"/>
+	<field name="aluno.servico.descricao" class="java.lang.String"/>
+	<field name="aluno.nome" class="java.lang.String"/>
+	<field name="categoria.descricao" class="java.lang.String"/>
+	<variable name="valor_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="totalGeral_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalGeral}]]></variableExpression>
+	</variable>
+	<variable name="valor_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valor_3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="79" width="554" height="1" uuid="5ad44641-d834-4d76-b020-93fde10d8145"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="2" y="2" width="112" height="71" uuid="c4a618ae-52ae-4fa5-b144-0fc77470a0a9"/>
+				<imageExpression><![CDATA["C:\\Meus_Projetos_2016\\bravos-7.2\\src\\main\\webapp\\resources\\img\\" + $F{usuario.autoescola.logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="413" y="0" width="142" height="40" uuid="d6bd184f-8f4b-4a8a-911a-444279daac03"/>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Relatório ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="5" width="160" height="20" uuid="59811d21-f0f9-4452-89ab-7f0ce44093ea"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario.autoescola.nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="25" width="160" height="20" uuid="1d826f8e-c997-4e04-9c76-eabf2f01d2ca"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario.autoescola.cnpj}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="371" y="59" width="183" height="20" uuid="6c339eff-efab-4102-b183-39a8ceabdd67"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="127" height="20" uuid="1cd3853b-f474-4892-b9b8-3ac2be7ad25a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atendente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="0" width="100" height="20" uuid="1c295ec6-0307-45e6-9035-67b0e5304924"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuario.nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="30" width="555" height="1" uuid="aa7cddb0-073a-4796-8640-9cb2d9c4509a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="179" splitType="Stretch">
+			<rectangle>
+				<reportElement x="439" y="133" width="116" height="20" forecolor="#009999" backcolor="#009999" uuid="fdebb8de-7254-4638-99e8-03bb93a6316d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="13" width="127" height="20" uuid="63ce84b0-559a-49fb-8719-dfd3a9edd90a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Pagamento:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="127" y="13" width="100" height="20" uuid="d3f4c1b8-7c77-403f-b40b-70a420f0cd3e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="39" width="100" height="20" uuid="4f9252a8-3bf8-4b72-8b39-2bff366843c3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{aluno.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="39" width="127" height="20" uuid="52370949-5dc9-4e2d-9e04-cbb7fea9cb99"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente / Fornecedor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="65" width="182" height="20" uuid="6dac6db1-489e-42c4-9743-59fc480d9b78"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categoria.descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="65" width="127" height="20" uuid="918c139c-521b-43a8-b781-238c85f27cd7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="118" width="290" height="20" uuid="ce2853f1-8217-4c1d-bbfb-ada4c8f20e68"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="118" width="127" height="20" uuid="4f0aa65f-d230-40b8-a7a6-609767af648e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Previsão:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="477" y="133" width="74" height="20" forecolor="#FFFFFF" uuid="bfb06abb-3b04-431c-aa0d-1616ad443613"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="444" y="133" width="31" height="20" forecolor="#FFFFFF" uuid="9c50d191-1bff-462e-b2a7-435c820ae3e1"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="169" width="555" height="1" uuid="36342983-19a2-4ce7-b7a7-895a38546c27"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="91" width="127" height="20" uuid="17eb9c8c-6330-4b12-a56b-9ff25cb4a575"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serviços:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="91" width="182" height="20" uuid="efc799e5-c8fa-430a-80cb-5f9ce6bc2260"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{aluno.servico.descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="518" y="7" width="36" height="20" uuid="d52811e0-11d5-405f-b3df-403535d7ef38"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="7" width="38" height="20" uuid="3bf5d655-4bc3-420c-b47b-0cff144081c8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="7" width="72" height="20" uuid="51559ca6-56b0-41d3-8a54-e024847b245f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página: "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="73" y="7" width="40" height="20" uuid="c304e191-0915-4112-98c3-bb429e704661"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement x="440" y="4" width="115" height="20" forecolor="#0066FF" backcolor="#0066CC" uuid="74080e0d-39fc-4d98-a67f-8c4ae2e86103"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="444" y="4" width="30" height="20" forecolor="#FFFFFF" backcolor="#00CCCC" uuid="31ae22e4-221b-4661-b579-cc446217e890"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="480" y="4" width="68" height="20" forecolor="#FFFFFF" uuid="c3231182-9282-4401-85a3-145c345db23f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{valor_3}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

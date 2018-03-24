@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+
+<title>bravos-7.2</title>
+
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASu__fdJyh7GGCm4kob2-lVgqfJhXEpJs"></script>
+
+
+
+<link href="../resources/js/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+
+<link href="../resources/js/simple-line-icons/simple-line-icons.min.css"
+	rel="stylesheet" type="text/css" />
+
+<link href="../resources/js/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+
+<link href="../resources/css/components.css" id="style_components"
+	rel="stylesheet" type="text/css" />
+	
+<link href="../resources/css/pace-theme-barber-shop" id="style_components"
+	rel="stylesheet" type="text/css" />	
+
+<link href="../resources/css/layout.css" rel="stylesheet"
+	type="text/css" />
+	<link href="../resources/css/profile.css" rel="stylesheet"
+	type="text/css" />
+	
+
+<link href="../resources/css/themes/blue.css" rel="stylesheet"
+	type="text/css" id="style_color" />
+
+<link href="../resources/js/uniform/css/uniform.default.css"
+	rel="stylesheet" type="text/css" />
+
+<link href="../resources/css/login.css" rel="stylesheet" type="text/css" />
+
+<link href="../resources/css/components-md.css" id="style_components"
+	rel="stylesheet" type="text/css" />
+
+<link href="../resources/css/customizacao.css" id="style_components"
+	rel="stylesheet" type="text/css" />
+
+
+<script src="../resources/js/jquery.min.js" type="text/javascript"></script>
+
+<script src="../resources/js/bootstrap/js/bootstrap.min.js"
+	type="text/javascript"></script>
+
+<script src="../resources/js/metronic.js" type="text/javascript"></script>
+
+<script src="../resources/js/layout.js" type="text/javascript"></script>
+
+<script src="../resources/js/quick-sidebar.js" type="text/javascript"></script>
+
+<script src="../resources/js/demo.js" type="text/javascript"></script>
+
+<script src="../resources/js/uniform/jquery.uniform.min.js"
+	type="text/javascript"></script>
+
+<script src="../resources/js/jquery.blockui.min.js"
+	type="text/javascript"></script>
+
+
+<script src="../resources/js/metronic.js" type="text/javascript"></script>
+
+<script src="../resources/js/layout.js" type="text/javascript"></script>
+
+<script src="../resources/js/quick-sidebar.js" type="text/javascript"></script>
+
+<script src="../resources/js/demo.js" type="text/javascript"></script>
+
+<script src="../resources/js/uniform/jquery.uniform.min.js"
+	type="text/javascript"></script>
+
+<script src="../resources/js/jquery.blockui.min.js"
+	type="text/javascript"></script>
+
+<h:outputScript library="primefaces" name="jquery/jquery.js"
+	target="head" />
+<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+	target="head" />
+<script>
+	jQuery.noConflict();
+
+	jQuery(document).ready(function($) {
+		/** Dropdown Menu **/
+		$('ul.tabs li:has(ul)').bind("click", function() {
+			$(this).find('ul').show('normal');
+			//event.stopPropagation();
+		});
+		$('ul.tabs li').bind("mouseleave", function() {
+			$(this).find('ul').hide('normal');
+			//event.stopPropagation();
+		});
+	});
+
+	jQuery(window).load(function($) {
+		$('#container').fadeIn('normal');
+	});
+</script>
+
+<script>
+	jQuery(document).ready(function() {
+
+		Layout.init();
+		QuickSidebar.init();
+		Demo.init();
+		Index.init();
+		Index.initDashboardDaterange();
+		Index.initJQVMAP();
+		Index.initCalendar();
+		Index.initCharts();
+		Index.initChat();
+		Index.initMiniCharts();
+		Tasks.initDashboardWidget();
+	});
+</script>
+
+
+<h:outputScript>
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Hoje',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
+		};
+	</h:outputScript>
+
+
+<h:outputScript>
+	function geocode() {
+	      PF('geoMap').geocode(document.getElementById('address').value);
+	  }
+	
+	  function reverseGeocode() {
+	      var lat = document.getElementById('lat').value,
+	          lng = document.getElementById('lng').value;
+	
+	      PF('revGeoMap').reverseGeocode(lat, lng);
+	  }
+</h:outputScript>
+
+<h:outputScript>
+var map;
+		var directionsService = new google.maps.DirectionsService();
+		var info = new google.maps.InfoWindow({maxWidth: 200});
+		
+		var marker = new google.maps.Marker({
+			title: 'Residencia Eneylton Barros',
+			icon: '../estilos/img/marker.png',
+			position: new google.maps.LatLng('-2.5357198', '-44.21076360000001')
+		});
+		
+		function initialize() {
+			var options = {
+					zoom: 15,
+					center: marker.position,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			
+			map = new google.maps.Map($('#map_content')[0], options);
+			
+			marker.setMap(map);
+			
+			google.maps.event.addListener(marker, 'click', function() {
+				info.setContent('Rua 03, Quadra 05 - Casa 36, Cohatrc IV - MA, 65054540, Brasil');
+				info.open(map, marker);
+			}); 
+		}
+		
+		$(document).ready(function() {
+			$('#form_route').submit(function() {
+				info.close();
+				marker.setMap(null);
+				
+				var directionsDisplay = new google.maps.DirectionsRenderer();
+				
+				var request = {
+						origin: $("#route_from").val(),
+						destination: marker.position,
+						travelMode: google.maps.DirectionsTravelMode.DRIVING
+				};
+				
+				directionsService.route(request, function(response, status) {
+						if (status == google.maps.DirectionsStatus.OK) {
+							directionsDisplay.setDirections(response);
+							directionsDisplay.setMap(map);
+						}
+				});
+				
+				return false;
+			});
+		});
+
+</h:outputScript>
+
+<h:outputScript>
+				                        function mascara(o,f){ 
+					v_obj=o 
+					v_fun=f 
+					setTimeout("execmascara()",1) 
+				} 
+				function execmascara(){ 
+					v_obj.value=v_fun(v_obj.value) 
+				} 
+				function moeda(v){ 
+					v=v.replace(/\D/g,""); // permite digitar apenas numero 
+					v=v.replace(/(\d{1})(\d{15})$/,"$1.$2") // coloca ponto antes dos ultimos digitos 
+					v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos 
+					v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos 
+					v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos 
+					v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos 
+					return v; 
+				}FFFF
+                        </h:outputScript>
+
+
+<h:outputScript>
+                        function chartExtender() {        
+                         // this = chart widget instance        
+                         // this.cfg = options      
+                         this.cfg.seriesDefaults.rendererOptions.varyBarColor = false;
+                        }
+                        </h:outputScript>
+
+<h:outputScript>
+                        function print(component){ var out = document.createElement('div'); out.appendChild(PF(component).exportAsImage()); var innerHTML = out.innerHTML; var openWindow = window.open('', 'Report', ''); openWindow.document.write(innerHTML); openWindow.document.close(); openWindow.focus(); openWindow.print(); openWindow.close(); } 
+}  
+                        
+</h:outputScript>
+
+
+
+
+<script type="text/javascript">
+	function exportChart() {
+		//export image
+		$('#output').empty().append(PF('chart').exportAsImage());
+
+		//show the dialog
+		PF('dlg').show();
+	}
+</script>
+
+
+<script type="text/javascript">
+	function imprimirCategoria() {
+		//export image
+		$('#output').empty().append(PF('chart22').exportAsImage());
+
+		//show the dialog
+		PF('dlg22').show();
+	}
+</script>
+
+
+<script type="text/javascript">
+	function imprimirGraficoMes() {
+		//export image
+		$('#output').empty().append(PF('barra').exportAsImage());
+
+		//show the dialog
+		PF('dialogBarra').show();
+	}
+</script>
+
+
+<script type="text/javascript">
+	function graficoLinha() {
+		//export image
+		$('#output').empty().append(PF('linha').exportAsImage());
+
+		//show the dialog
+		PF('dialogLinha').show();
+	}
+</script>
+
+<script type="text/javascript">
+	function graficoRank() {
+		//export image
+		$('#output').empty().append(PF('rank').exportAsImage());
+
+		//show the dialog
+		PF('dialogRank').show();
+	}
+</script>
+
+
+<script type="text/javascript">
+	function graficoReceber() {
+		//export image
+		$('#output').empty().append(PF('receber').exportAsImage());
+
+		//show the dialog
+		PF('dialogReceber').show();
+	}
+</script>
+
+<script type="text/javascript">
+	function start() {
+		PF('startButton1').disable();
+
+		window['progress'] = setInterval(
+				function() {
+					var pbClient = PF('pbClient'), oldValue = pbClient
+							.getValue(), newValue = oldValue + 10;
+
+					pbClient.setValue(pbClient.getValue() + 10);
+
+					if (newValue === 100) {
+						clearInterval(window['progress']);
+					}
+
+				}, 1000);
+	}
+
+	function cancel() {
+		clearInterval(window['progress']);
+		PF('pbClient').setValue(0);
+		PF('startButton1').enable();
+	}
+</script>
+
+
+<h:outputScript>
+	function geocode() {
+	      PF('geoMap').geocode(document.getElementById('address').value);
+	  }
+	
+	  function reverseGeocode() {
+	      var lat = document.getElementById('lat').value,
+	          lng = document.getElementById('lng').value;
+	
+	      PF('revGeoMap').reverseGeocode(lat, lng);
+	  }
+</h:outputScript>
+
+<h:outputScript>
+var map;
+		var directionsService = new google.maps.DirectionsService();
+		var info = new google.maps.InfoWindow({maxWidth: 200});
+		
+		var marker = new google.maps.Marker({
+			title: 'Residencia Eneylton Barros',
+			icon: '../estilos/img/marker.png',
+			position: new google.maps.LatLng('-2.5357198', '-44.21076360000001')
+		});
+		
+		function initialize() {
+			var options = {
+					zoom: 15,
+					center: marker.position,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			
+			map = new google.maps.Map($('#map_content')[0], options);
+			
+			marker.setMap(map);
+			
+			google.maps.event.addListener(marker, 'click', function() {
+				info.setContent('Rua 03, Quadra 05 - Casa 36, Cohatrc IV - MA, 65054540, Brasil');
+				info.open(map, marker);
+			}); 
+		}
+		
+		$(document).ready(function() {
+			$('#form_route').submit(function() {
+				info.close();
+				marker.setMap(null);
+				
+				var directionsDisplay = new google.maps.DirectionsRenderer();
+				
+				var request = {
+						origin: $("#route_from").val(),
+						destination: marker.position,
+						travelMode: google.maps.DirectionsTravelMode.DRIVING
+				};
+				
+				directionsService.route(request, function(response, status) {
+						if (status == google.maps.DirectionsStatus.OK) {
+							directionsDisplay.setDirections(response);
+							directionsDisplay.setMap(map);
+						}
+				});
+				
+				return false;
+			});
+		});
+
+</h:outputScript>
+
+
+
+</html>

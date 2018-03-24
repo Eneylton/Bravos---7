@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-calendar" /> Agendamento <SMALL><span>Aluno:
+			</span><span>#{agendaBean.cadAgenda.aluno.nome}</span></SMALL>
+		</h1>
+
+		<p:separator style="margin: 10px 0px;" />
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<f:metadata>
+			<o:viewParam name="cadAgenda" value="#{agendaBean.cadAgenda}" />
+
+		</f:metadata>
+
+		<h:form id="form">
+
+			<h:panelGrid columnClasses="value">
+				<h5 style="margin-top: 0; color: #fff">#{agendaBean.cadAgenda.aluno.nome}</h5>
+
+				<p:schedule value="#{agendaBean.agendaCalendario}" locale="pt"
+					axisFormat="HH:mm" timeFormat="HH:mm" allDaySlot="false"
+					slotMinutes="10" view="agendaWeek" minTime="07:00:00"
+					maxTime="18:10:00" id="schEvento" widgetVar="modal"
+					timeZone="America/Sao_Paulo">
+					<p:ajax event="eventSelect"
+						listener="#{agendaBean.quandoSelecionado}" update="eventoDetalhe"
+						oncomplete="PF('caixaDialog').show();" />
+
+					<p:ajax event="dateSelect" listener="#{agendaBean.quandoNovo}"
+						update="eventoDetalhe" oncomplete="PF('caixaDialog').show();" />
+
+					<p:ajax event="eventMove" listener="#{agendaBean.quandoMovido}"
+						update="schEvento" />
+
+					<p:ajax event="eventResize"
+						listener="#{agendaBean.quandoRedimencionado}" update="schEvento" />
+
+
+
+				</p:schedule>
+
+				<p:dialog widgetVar="caixaDialog" header="Agendar" resizable="false"
+					modal="true" showEffect="clip">
+					<p:outputPanel id="eventoDetalhe">
+						<h:panelGrid columns="2">
+
+							<h:inputHidden value="#{agendaBean.agenda.titulo}" />
+
+							<p:outputLabel />
+
+							<p:outputLabel value="Inicio" />		
+							
+							<p:calendar value="#{agendaBean.agenda.inicio}" locale="pt"
+								pattern="dd/MM/yyyy - HH:mm" minHour="7" maxHour="18"
+								maxMinute="30" showOn="button" />
+
+							<p:outputLabel />
+							<p:outputLabel />
+
+
+							<p:outputLabel value="Fim" />
+							<p:calendar value="#{agendaBean.agenda.fim}" locale="pt"
+								pattern="dd/MM/yyyy - HH:mm" minHour="7" maxHour="18"
+								maxMinute="30" showOn="button" />
+
+							<p:outputLabel />
+							<p:outputLabel />
+
+							<p:outputLabel value="Confirmar" />
+							<p:selectBooleanCheckbox value="#{agendaBean.agenda.status}" />
+
+							<p:outputLabel />
+							<p:outputLabel />
+
+
+							<p:outputLabel value="Observação" style="margin-right:10px" />
+							<p:inputTextarea value="#{agendaBean.agenda.descricao}"
+								autoResize="true" />
+
+
+
+
+						</h:panelGrid>
+
+						
+
+					</p:outputPanel>
+					<br />
+					<p:commandButton actionListener="#{agendaBean.salvar}" icon="fa fa-calendar"
+						value="Agendar" update="messages schEvento"
+						oncomplete="PF('caixaDialog').hide();" />
+
+				</p:dialog>
+
+
+
+			</h:panelGrid>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

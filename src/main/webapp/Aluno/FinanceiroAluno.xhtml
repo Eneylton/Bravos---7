@@ -1,0 +1,346 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="aluno" value="#{cadastroAlunoBean.aluno}" />
+		</f:metadata>
+
+
+		<h:form id="frm" prependId="false">
+			<h:inputHidden id="id" value="#{cadastroAlunoBean.aluno.id}"
+				readonly="true" />
+
+			<h3 class="page-title">
+				<i class="icon-users" style="color: #1caf9a; font-size: 23px;" /><span
+					style="margin-left: 10px;">Aluno Financeiro</span>
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+							
+							 
+
+
+							<div class="col-sm-4">
+
+								<div class="portlet light profile-sidebar-portlet">
+									<div class="profile-userpic">
+										<img src="../resources/img/#{cadastroAlunoBean.aluno.foto}" class="img-responsive"
+											alt="" />
+									</div>
+
+									<div class="profile-usertitle">
+										<div class="profile-usertitle-name">#{cadastroAlunoBean.aluno.nome}
+											#{cadastroAlunoBean.aluno.sobreNome}</div>
+										<div class="profile-usertitle-job">#{cadastroAlunoBean.aluno.email}</div>
+
+										<div class="profile-userbuttons">
+											<p:commandButton icon="fa fa-plus-circle" value="A vista"
+												onclick="PF('dlg2').show();" type="button"
+												styleClass="btn btn-circle green-haze btn-sm">
+
+												<p:resetInput target="formulario-dialog" />
+
+											</p:commandButton>
+
+
+
+											<p:commandButton icon="fa fa-check-circle" value="Parcelado"
+												onclick="PF('dlg1').show();" type="button"
+												styleClass="btn btn-circle btn-danger btn-sm" />
+										</div>
+
+										<div class="profile-usermenu">
+											<ul class="nav">
+												<li class="active"><a href="../Financeiro/FluxoCaixa.xhtml"> <i
+														class="icon-layers"></i> Financeiro
+												</a></li>
+												<li><a href="PesquisaAluno.xhtml"> <i
+														class="icon-arrow-left"></i> Alunos
+												</a></li>
+
+											</ul>
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+
+
+							<div class="col-lg-4">
+								<div class="dashboard-stat blue">
+									<div class="visual">
+										<i class="fa fa-wrench"></i>
+									</div>
+									<div class="details">
+										<div class="number">
+											<p:outputLabel
+												value="#{cadastroAlunoBean.aluno.servico.valor}">
+
+												<f:convertNumber type="currency" />
+
+											</p:outputLabel>
+										</div>
+										<div class="desc">#{cadastroAlunoBean.aluno.servico.descricao}</div>
+									</div>
+									<a class="more" href="javascript:;"> Mais Detalhes<i
+										class="m-icon-swapright m-icon-white"></i>
+									</a>
+								</div>
+							</div>
+
+							<div class="col-lg-4">
+								<div class="dashboard-stat green">
+									<div class="visual">
+										<i class="fa fa-comments"></i>
+									</div>
+									<div class="details">
+										<div class="number">1349</div>
+										<div class="desc">New Feedbacks</div>
+									</div>
+									<a class="more" href="javascript:;"> View more <i
+										class="m-icon-swapright m-icon-white"></i>
+									</a>
+								</div>
+								<p:spacer style="margin-bottom:4px;" />
+							</div>
+
+							<div class="col-sm-8">
+								<p:dataTable var="parcela" id="tab" rows="12" reflow="true"
+									paginatorPosition="bottom"
+									value="#{cadastroAlunoBean.listaFinanceiroAlunos}"
+									emptyMessage="Nenhuma Parcela Gerada até o momento ...."
+									paginator="true" rowsPerPageTemplate="10,15,30">
+
+
+
+									<p:column headerText="Parcelas">
+										<div class="label label-sm label-success"> <i
+											class="fa fa-arrow-right" style="color: #cff501" /> <p:spacer
+												style="margin-left:10px;" /> <h:outputText
+												style="color:#fff" value="#{parcela.qtdParcela}" />
+										</div>
+									</p:column>
+
+									<p:column headerText="Vencimento">
+										<div class="label label-sm label-success">
+											<i class="fa fa-calendar" />
+											<p:spacer style="margin-left:10px;" />
+											<h:outputText value="#{parcela.data}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+									</p:column>
+
+									<p:column headerText="Status">
+										<span  class="label label-sm label-success">
+										
+										<h:outputText
+												value="PAGO" style="color:#fff"
+												rendered="#{parcela.status eq 'PAGO'}" /></span>
+
+										<span class="label label-sm label-danger"><h:outputText
+												style="color:#fff" value="EM ABERTO "
+												rendered="#{parcela.status eq 'EM ABERTO'}" /></span>
+									</p:column>
+
+									<p:column headerText="Valor">
+										<div class="label label-sm label-success"><i
+											class="fa fa-dollar" style="color: #cff501" /> <p:spacer
+												style="margin-left:10px;" /> <h:outputText
+												value="#{parcela.valor}" style="color:#fff">
+												<f:convertNumber type="currency" />
+											</h:outputText>
+										</div>
+									</p:column>
+
+
+								</p:dataTable>
+
+								<p:dialog id="formulario-dialog" header="Entrada + Parcela"
+									modal="true" widgetVar="dlg1" minHeight="40" width="300"
+									showEffect="explode" hideEffect="explode" responsive="true"
+									resizable="false">
+
+									<div class="form-group form-md-line-input ">
+
+
+
+
+										<div class="input-icon">
+
+											<p:selectOneMenu styleClass="bs-select form-control" id="qtd"
+												value="#{cadastroAlunoBean.aluno.qtd}">
+												<f:selectItem itemLabel="Quantidade de Parcelas"
+													itemValue="" />
+												<f:selectItem itemLabel="2 - Parcelas" itemValue="2" />
+												<f:selectItem itemLabel="4 - Parcelas" itemValue="4" />
+												<f:selectItem itemLabel="5 - Parcelas" itemValue="5" />
+												<f:selectItem itemLabel="10 - Parcelas" itemValue="10" />
+											</p:selectOneMenu>
+
+											<p:spacer style="margin-bottom:10px;" />
+
+										</div>
+
+
+										<div class="input-icon">
+											<p:selectOneMenu id="forma"
+												styleClass="bs-select form-control"
+												value="#{cadastroAlunoBean.aluno.idFormaPagamento}">
+												<f:selectItem itemLabel="Forma de Pagamento:" itemValue="" />
+												<f:selectItem itemLabel="001 - Dinheiro" itemValue="1" />
+												<f:selectItem itemLabel="002 - Débito Automático"
+													itemValue="2" />
+												<f:selectItem itemLabel="003 - Cartão de Crédito"
+													itemValue="3" />
+												<f:selectItem itemLabel="004 - Cheque" itemValue="4" />
+											</p:selectOneMenu>
+
+											<p:spacer style="margin-bottom:10px;" />
+										</div>
+
+
+										<div class="input-icon">
+											<label for="form_control_1"> Valor de Entrada: </label>
+
+											<p:inputText placeholder="Entrada:" styleClass="form-control"
+												id="entrada" onkeydown="mascara(this,moeda)"
+												value="#{cadastroAlunoBean.aluno.entrada}" required="true">
+
+												<f:convertNumber groupingUsed="true" minFractionDigits="2"
+													maxFractionDigits="2" />
+
+											</p:inputText>
+
+
+											<div class="form-control-focus"></div>
+
+
+										</div>
+
+
+										<div class="input-icon">
+											<p:calendar placeholder="Data do Vencimento:"
+												value="#{cadastroAlunoBean.aluno.data}"
+												styleClass="form-control" locale="pt" pattern="dd/MM/yyyy" />
+
+										</div>
+										<p:spacer style="margin-bottom:13px;" />
+
+										<div class="input-icon">
+
+											<p:selectOneMenu id="caixa" styleClass="form-control"
+												value="#{cadastroAlunoBean.aluno.idCaixa}">
+												<f:selectItem itemLabel="Selecione" itemValue="" />
+												<f:selectItem itemLabel="001 - Empresa" itemValue="1" />
+												<f:selectItem itemLabel="002 - Agência Bancária"
+													itemValue="2" />
+
+											</p:selectOneMenu>
+
+										</div>
+										<p:spacer style="margin-bottom:15px;" />
+
+										<div class="input-icon">
+											<p:commandButton value="Registrar" ajax="false"
+												icon="fa fa-check-circle"
+												action="#{cadastroAlunoBean.calcular}"
+												update=":frm:tab" styleClass="btn red-intense" />
+
+										</div>
+
+
+									</div>
+
+
+
+								</p:dialog>
+
+
+
+								<p:dialog id="formulario-dialog2" header="Á vista" modal="true"
+									widgetVar="dlg2" minHeight="40" showEffect="explode"
+									hideEffect="explode" width="300" responsive="true"
+									resizable="false">
+
+									<div class="form-group form-md-line-input ">
+										<div class="input-icon">
+
+											<p:selectOneMenu id="forma2" styleClass="form-control"
+												value="#{cadastroAlunoBean.aluno.idFormaPagamento2}">
+												<f:selectItem itemLabel="Selecione" itemValue="" />
+												<f:selectItem itemLabel="001 - Dinheiro" itemValue="1" />
+												<f:selectItem itemLabel="002 - Débito Automático"
+													itemValue="2" />
+												<f:selectItem itemLabel="003 - Cartão de Crédito"
+													itemValue="3" />
+												<f:selectItem itemLabel="004 - Cheque" itemValue="4" />
+											</p:selectOneMenu>
+
+
+										</div>
+
+										<p:spacer style="margin-bottom:10px;" />
+
+										<div class="input-icon">
+
+											<p:selectOneMenu id="caixa2" styleClass="form-control"
+												value="#{cadastroAlunoBean.aluno.idCaixa2}">
+												<f:selectItem itemLabel="Selecione" itemValue="" />
+												<f:selectItem itemLabel="001 - Empresa" itemValue="1" />
+												<f:selectItem itemLabel="002 - Agência Bancária"
+													itemValue="2" />
+
+											</p:selectOneMenu>
+
+										</div>
+
+										<p:spacer style="margin-bottom:15px;" />
+										<hr />
+
+
+										<div class="input-icon">
+
+											<p:commandButton value="Registrar" ajax="false"
+												icon="fa fa-plus-circle"
+												action="#{cadastroAlunoBean.pagamentoAvista}"
+												update=":frm:tab" styleClass="btn btn-sm green" />
+
+
+
+										</div>
+
+									</div>
+								</p:dialog>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>

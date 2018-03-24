@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
+		</f:metadata>
+
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-unlock-alt" /> Alterar Senha
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+		<h:form id="frm" prependId="false">
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+			<p:spacer />
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+
+					<p:commandButton ajax="false" value="Cadastrar" icon="fa fa-check"
+						action="#{cadastroUsuarioBean.alterarSenhaUsuario}"
+						styleClass="btn btn-info btn-sm dropdown-toggle"
+						style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+
+
+
+
+					<div class="pull-right">
+						<div class="btn-group">
+							<p:button type="button" value="Pesquisar" icon="fa fa-search"
+								outcome="PesquisaUsuario.xhtml"
+								styleClass="btn btn-success btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+
+
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<i class="fa fa-unlock-alt" /> Cadastre um nova senha.
+				</div>
+
+				<div class="panel-body">
+					<div id="morris-line-chart">
+
+						<p:panelGrid columns="4" styleClass="semBorda">
+
+							<p:outputLabel value="Login:" />
+
+
+
+							<p:inputText styleClass="form-control" id="login" maxlength="255"
+								style="width:100%;" value="#{cadastroUsuarioBean.usuario.login}"
+								required="true" readonly="true"
+								requiredMessage="Login deve ser informado." />
+
+
+
+
+							<p:outputLabel value="Nova Senha:" />
+							<p:password styleClass="form-control" id="novaSenha" size="20"
+								value="#{cadastroUsuarioBean.usuario.senha}" match="senha2"
+								required="true" validatorMessage="Senha não confere"
+								requiredMessage="Nova Senha deve ser informada" />
+
+
+
+							<p:outputLabel value="Confirmar Senha:" />
+							<p:password styleClass="form-control" id="senha2" size="20"
+								label="Confirmar Senha" required="true"
+								requiredMessage="Confirmar senha deve ser informada" />
+
+
+
+						</p:panelGrid>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

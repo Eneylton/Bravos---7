@@ -1,0 +1,512 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+		<f:metadata>
+			<f:viewParam name="dummy" />
+			<o:viewParam name="aluno" value="#{cadastroAlunoBean.aluno}" />
+		</f:metadata>
+
+		<h:form id="frm" prependId="false">
+
+
+			<h3 class="page-title">
+				<i class="icon-user" style="color: #1caf9a; font-size: 23px" />
+				<span
+					style="margin-left: 10px;">Alunos</span>
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+							<h:inputHidden id="id" value="#{cadastroAlunoBean.aluno.id}"
+								readonly="true" />
+
+							<h:inputHidden id="latitude"
+								value="#{cadastroAlunoBean.aluno.latitude}" readonly="true" />
+
+							<h:inputHidden id="longitude"
+								value="#{cadastroAlunoBean.aluno.longitude}" readonly="true" />
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Cadastro
+												de alunos </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">novo
+												cadastro </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:commandButton value="Salvar" icon="fa fa-plus"
+												ajax="false" action="#{cadastroAlunoBean.salvar}"
+												styleClass="btn btn-sm blue" />
+
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+											<p:button type="button" value="Pesquisar"
+												outcome="PesquisaAluno" icon="fa fa-search"
+												styleClass="btn btn-sm green" />
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+
+
+							</div>
+							<div class="portlet box blue-hoki">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="fa fa-lock"></i>Preencha as informações
+									</div>
+									<div class="tools">
+										<a href="javascript:;" class="collapse"> </a> <a
+											href="#portlet-config" data-toggle="modal" class="config">
+										</a> <a href="javascript:;" class="reload"> </a> <a
+											href="javascript:;" class="remove"> </a>
+									</div>
+								</div>
+								<div class="portlet-body form">
+
+									<div class="portlet-title">
+
+										<div class="col-md-6">
+											<div class="form-group form-md-line-input has-success">
+
+												<div class="input-icon right">
+
+													<p:inputText placeholder="Nome:" styleClass="form-control"
+														maxlength="255" value="#{cadastroAlunoBean.aluno.nome}"
+														required="true" />
+													<i class="icon-user" />
+
+
+												</div>
+
+												<p:spacer style="margin-bottom:7px" />
+
+
+
+												<div class="input-icon right">
+
+													<p:inputText styleClass="form-control" maxlength="255"
+														placeholder="Sobrenome:"
+														value="#{cadastroAlunoBean.aluno.sobreNome}"
+														required="true" />
+													<i class="icon-lock" />
+
+												</div>
+
+
+
+
+											</div>
+
+										</div>
+
+
+										<div class="col-md-6">
+											<div class="form-group form-md-line-input has-success">
+
+												<div class="input-icon right">
+
+													<p:inputText styleClass="form-control" maxlength="255"
+														placeholder="Pai:" value="#{cadastroAlunoBean.aluno.pai}"
+														required="true" />
+
+
+													<i class="icon-key" />
+
+												</div>
+												<p:spacer style="margin-bottom:7px" />
+
+												<div class="input-icon right">
+
+													<p:inputText styleClass="form-control" maxlength="255"
+														placeholder="Mãe:" value="#{cadastroAlunoBean.aluno.mae}"
+														required="true" />
+
+
+													<i class="icon-key" />
+
+												</div>
+
+												<p:spacer style="margin-bottom:15px" />
+
+											</div>
+
+										</div>
+
+
+
+
+									</div>
+
+
+									<div class="col-md-12">
+
+										<div class="row">
+
+
+											<div class="col-md-12">
+
+												<div class="portlet-body">
+													<div class="tabbable">
+														<ul class="nav nav-tabs">
+															<li class="active"><a href="#tab_001"
+																data-toggle="tab"><i class="fa fa-map-marker"
+																	style="color: #23abb8" /> Endereço: </a></li>
+															<li><a href="#tab_002" data-toggle="tab"><i
+																	class="fa fa-clipboard" style="color: #1f4a80;" />
+																	Documentos </a></li>
+
+															<li><a href="#tab_003" data-toggle="tab"><i
+																	class="fa fa-wrench" style="color: #3697dc;" />
+																	Serviços </a></li>
+
+
+															<li><a href="#tab_004" data-toggle="tab"><i
+																	class="fa fa-phone-square" style="color: #ff9800;" />
+																	Contatos </a></li>
+
+														</ul>
+
+
+														<div class="tab-content no-space">
+															<div class="tab-pane active" id="tab_001">
+
+																<div class="col-md-6">
+																	<div style="margin-top: -20px"
+																		class="form-group form-md-line-input has-success">
+
+																		<p:panelGrid columns="2" styleClass="semBorda">
+
+																			<p:inputMask id="address" mask="99999-999"
+																				placeholder="cep"
+																				value="#{cadastroAlunoBean.aluno.cep}"
+																				styleClass="form-control " />
+
+																			<p:commandButton icon="fa fa-search" ajax="false"
+																				onclick="geocode()" type="button"
+																				styleClass="btn red-intense" update="@form">
+
+																				<p:ajax listener="#{cadastroAlunoBean.cep}"
+																					process="@form" />
+
+																			</p:commandButton>
+
+
+
+
+																			<p:inputText placeholder="Endereço:"
+																				styleClass="form-control"
+																				value="#{cadastroAlunoBean.aluno.endereco}" />
+																			<p:spacer />
+
+																			<p:inputText placeholder="Bairro:"
+																				styleClass="form-control"
+																				value="#{cadastroAlunoBean.aluno.bairro}" />
+
+
+
+																			<p:inputText placeholder="Nº:"
+																				styleClass="form-control"
+																				value="#{cadastroAlunoBean.aluno.numero}" />
+
+
+
+																			<p:inputText placeholder="Cidade:"
+																				styleClass="form-control"
+																				value="#{cadastroAlunoBean.aluno.cidade}" />
+
+																			<p:spacer />
+
+
+																			<p:inputText placeholder="Estado:"
+																				styleClass="form-control" style="width:50px"
+																				value="#{cadastroAlunoBean.aluno.estado}" />
+
+
+
+																		</p:panelGrid>
+
+																	</div>
+																</div>
+
+
+
+																<div class="col-md-6">
+
+
+
+																	<p:gmap id="geoGmap" widgetVar="geoMap"
+																		center="#{cadastroAlunoBean.centerGeoMap}" zoom="15"
+																		type="ROADMAP" model="#{cadastroAlunoBean.geoModel}"
+																		style="width:100%; height:250px">
+																		<p:ajax event="geocode"
+																			listener="#{cadastroAlunoBean.onGeocode}"
+																			update="@form" />
+																	</p:gmap>
+
+																	<p:spacer style="margin-bottom:10px" />
+
+																</div>
+
+
+															</div>
+															<div class="tab-pane" id="tab_002">
+																<div class="form-body">
+																	<div class="col-md-4">
+
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+																			<div class="input-icon right">
+
+																				<p:inputMask placeholder="CPF:"
+																					styleClass="form-control" maxlength="255"
+																					value="#{cadastroAlunoBean.aluno.cpf}"
+																					mask="999.999.999-99" />
+
+																			</div>
+
+
+																			<div class="input-icon right">
+
+																				<p:inputMask placeholder="RG:"
+																					styleClass="form-control" maxlength="255"
+																					value="#{cadastroAlunoBean.aluno.rg}" />
+
+																			</div>
+
+
+																			<div class="input-icon right">
+
+																				<p:inputMask placeholder="RENACH:"
+																					styleClass="form-control" maxlength="255"
+																					value="#{cadastroAlunoBean.aluno.renach}" />
+
+																			</div>
+
+
+																			<div class="input-icon right">
+
+																				<p:inputMask placeholder="CNH:"
+																					styleClass="form-control" maxlength="255"
+																					value="#{cadastroAlunoBean.aluno.cnh}" />
+
+																			</div>
+
+																			<p:spacer style="margin-bottom:15px" />
+
+																		</div>
+
+																	</div>
+
+																	<div class="col-md-4">
+
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+																			<div class="input-icon right">
+
+																				<p:calendar yearRange="-111:+39"
+																					placeholder="Data Nascimento:"
+																					value="#{cadastroAlunoBean.aluno.dataNascimento}"
+																					pattern="dd/MM/yyyy" id="data" navigator="true"
+																					pages="2" locale="pt" />
+
+
+																			</div>
+
+
+																		</div>
+
+
+																	</div>
+
+																	<p:spacer style="margin-bottom:15px" />
+
+																	<div class="col-md-4">
+
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+																			<div class="input-icon right">
+
+																				<p:selectOneMenu id="sexo" style="width:100%;"
+																					converter="omnifaces.SelectItemsConverter"
+																					styleClass="form-control"
+																					value="#{cadastroAlunoBean.aluno.sexo}">
+																					<f:selectItem itemLabel="Selecione o Sexo" />
+																					<f:selectItems
+																						value="#{cadastroAlunoBean.listarSexos}" var="var"
+																						itemLabel="#{var.descricao}" itemValue="#{var}" />
+																				</p:selectOneMenu>
+
+
+
+																			</div>
+
+																		</div>
+
+
+																	</div>
+
+																	<p:spacer style="margin-bottom:15px" />
+
+
+																	<div class="col-md-8">
+
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+																			<div class="input-icon right">
+
+																				<p:fileUpload
+																					fileUploadListener="#{cadastroAlunoBean.handleFileUpload}"
+																					label="Foto" auto="true" mode="advanced"
+																					dragDropSupport="false" sizeLimit="5000000"
+																					fileLimit="1" allowTypes="/(\.|\/)(jpg|png)$/" />
+
+																			</div>
+																		</div>
+
+
+																	</div>
+
+																	<p:spacer style="margin-bottom:10px" />
+
+																</div>
+															</div>
+
+															<div class="tab-pane" id="tab_003">
+																<div class="form-body">
+																	<div class="col-md-4">
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+																			<p:selectOneMenu styleClass="form-control"
+																				id="idservico" style="width:100%;" filter="true"
+																				converter="omnifaces.SelectItemsConverter"
+																				value="#{cadastroAlunoBean.aluno.servico}">
+																				<f:selectItem itemLabel="Selcione o Serviço" />
+																				<f:selectItems
+																					value="#{cadastroAlunoBean.listarServicos}"
+																					var="var" itemLabel="#{var.descricao}"
+																					itemValue="#{var}" />
+																			</p:selectOneMenu>
+
+																			<p:spacer style="margin-bottom:10px" />
+
+
+
+																		</div>
+
+
+																	</div>
+																</div>
+															</div>
+
+															<div class="tab-pane" id="tab_004">
+																<div class="form-body">
+																	<div class="col-md-4">
+																		<div style="margin-top: -20px"
+																			class="form-group form-md-line-input has-success">
+
+
+
+																			<p:inputText placeholder="Email:" type="email"
+																				styleClass="form-control" maxlength="255"
+																				style="width:400px"
+																				value="#{cadastroAlunoBean.aluno.email}" />
+
+
+																			<p:spacer style="margin-bottom:10px" />
+
+																			<p:inputMask placeholder="Tel Fixo"
+																				mask="(99) 9999 - 9999" styleClass="form-control"
+																				style="width:150px"
+																				value="#{cadastroAlunoBean.aluno.fixo}" />
+																			<p:spacer style="margin-bottom:10px" />
+
+
+																			<p:inputMask placeholder="Whatsapp"
+																				mask="(99) 99999 - 9999" styleClass="form-control"
+																				maxlength="255" style="width:150px"
+																				value="#{cadastroAlunoBean.aluno.whatsapp}" />
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+
+															<p:spacer style="margin-bottom:10px" />
+
+
+
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+
+
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+	</ui:define>
+
+</ui:composition>

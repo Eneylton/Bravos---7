@@ -1,0 +1,266 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="mapa2"
+				value="#{mapa2Bean.mapa2}" />
+
+		</f:metadata>
+
+
+		<h:form id="frm" prependId="false">
+
+
+
+
+			<h:inputHidden id="id"
+				value="#{mapa2Bean.mapa2.id}" readonly="true" />
+
+
+			<h3 class="page-title">
+			<i class="icon-lock-open" style="color:#1caf9a; font-size: 23px" />	Mapa 2
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Lista
+												de Auto Escola </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">últimos
+												cadastros </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:commandButton value="Novo" icon="fa fa-plus" id="btn1"
+												styleClass="btn btn-sm blue"
+												action="#{mapa2Bean.prepararNovoCadastro}"
+												process="@this" update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()">
+
+
+												<p:resetInput target="formulario-dialog" />
+											</p:commandButton>
+											
+											
+											
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+											
+											
+											<p:commandButton icon="fa fa-upload" value="Relatório"
+												immediate="true" ajax="false" process="@this"
+												action="#{mapa2Bean.gerarRelatorio}" onclick="this.form.target='_blank'"
+												styleClass="btn btn-sm green" />
+												
+												
+												
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+											
+											
+												<p:commandButton icon="fa fa-upload" value="Mapas"
+												immediate="true" ajax="false" process="@this"
+												action="#{mapa2Bean.gerarMapa}" onclick="this.form.target='_blank'"
+												styleClass="btn btn-sm red" />
+											
+											
+											
+											<p:spacer style="margin-left:10px" />
+
+
+											<p:commandButton icon="fa fa-pencil" id="btn2"
+												process="@this" update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()"
+												disabled="#{mapa2Bean.mapa2Selecionada == null}"
+												styleClass="btn btn-sm yellow ">
+
+
+												<p:resetInput target="formulario-dialog" />
+
+												<f:setPropertyActionListener
+													value="#{mapa2Bean.mapa2Selecionada}"
+													target="#{mapa2Bean.mapa2Edicao}" />
+											</p:commandButton>
+
+											<p:spacer style="margin-left:10px" />
+
+											<p:commandButton icon="fa fa-trash" process="@this"
+												update=":frm:mapa2Table :frm:msgs :frm:toolbar"
+												action="#{mapa2Bean.excluir}"
+												disabled="#{mapa2Bean.mapa2Selecionada == null}"
+												styleClass="btn btn-sm red">
+
+
+												<p:confirm icon="fa fa-exclamation-triangle"
+													header="Confirmação de exclusão"
+													message="Tem Certeza que Deseja Excluir essa Auto Escola ?" />
+
+											</p:commandButton>
+
+
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+							</div>
+
+							<p:dataTable value="#{mapa2Bean.listarMapas}"
+								reflow="true"
+								filteredValue="#{mapa2Bean.pesquisarMapas}"
+								var="mapa2" widgetVar="mapa2Table"
+								emptyMessage="Nenhum Arquivo Cadastrado...." rows="10"
+								paginator="true" paginatorPosition="bottom"
+								style="margin-top: 10px" id="mapa2Table"
+								selection="#{mapa2Bean.mapa2Selecionada}"
+								selectionMode="single" rowKey="#{mapa2.id}">
+
+								<f:facet name="header">
+									<p:outputPanel>
+
+										<p:inputText id="globalFilter"
+											onkeyup="PF('mapa2Table').filter()" style="width:250px"
+											placeholder="Pesquisar" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:ajax event="rowSelect" update=":frm:toolbar" />
+								<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+								<p:column headerText="Código" priority="1"
+									style="width:100px; text-align:center;">
+									<h:outputText value="#{mapa2.id}" />
+								</p:column>
+
+								<p:column style="width:200px; text-align:left;"
+									headerText="Nome" filterBy="#{mapa2.nome}"
+									filterable="#{mapa2.nome}">
+
+									<h:outputText value="#{mapa2.nome}" />
+								</p:column>
+
+
+								<p:column style="width:200px; " headerText="Latitude"
+									filterBy="#{mapa2.latitude}" filterable="#{mapa2.latitude}">
+
+									<h:outputText value="#{mapa2.latitude}" />
+								</p:column>
+
+								<p:column style="width:200px; " headerText="Longitude"
+									filterBy="#{mapa2.longitude}" filterable="#{mapa2.longitude}">
+
+									<h:outputText value="#{mapa2.longitude}" />
+								</p:column>
+
+
+							</p:dataTable>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<p:dialog header="Novo Cadastro" widgetVar="edicaoDialog"
+				style="top: 94.5px !important" id="formulario-dialog"
+				resizable="false" modal="true" responsive="true"
+				closeOnEscape="true" width="300">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<div class="form-group form-md-line-input ">
+
+
+				
+
+					<div class="input-icon">
+						<p:inputText placeholder="Nome:"
+							styleClass="form-control"
+							value="#{mapa2Bean.mapa2Edicao.nome}"
+							required="true" />
+						<div class="form-control-focus"></div>
+
+					</div>
+
+					<div class="input-icon">
+						<p:inputText  placeholder="Longitude:"
+							styleClass="form-control"
+							value="#{mapa2Bean.mapa2Edicao.latitude}"
+							required="true" />
+						<div class="form-control-focus"></div>
+
+					</div>
+
+					<div class="input-icon">
+						<p:inputText  placeholder="Longitude:"
+							styleClass="form-control"
+							value="#{mapa2Bean.mapa2Edicao.longitude}"
+							required="true" />
+						<div class="form-control-focus"></div>
+					</div>
+
+				</div>
+
+				<p:commandButton value="Salvar" id="salvar-button"
+					icon="fa fa-check" action="#{mapa2Bean.salvar}"
+					process="formulario-dialog" update=":frm:mapa2Table :frm:msgs"
+					oncomplete="PF('edicaoDialog').hide()"
+					styleClass="btn btn-sm green" />
+
+			</p:dialog>
+
+
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no btn btn-sm red" icon="fa fa-times" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes btn btn-sm default"
+					icon="fa fa-check" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

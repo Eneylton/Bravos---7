@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<p:dialog header="Recibo" widgetVar="fichaDialog"
+		id="fichaCadastralDialog" styleClass="modal-header"
+		showEffect="explode" hideEffect="explode" resizable="false"
+		modal="true" closeOnEscape="true">
+
+
+		<h:panelGroup id="inclusaoPanel">
+
+			<p:messages closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+
+			</p:messages>
+
+			<p:panelGrid columns="4" styleClass="semBorda">
+
+				<h:outputText value="Pagamento em:" style="font-weight: 600;" />
+
+				<p:outputLabel value="#{despesaBean.financeiroSelecionado.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</p:outputLabel>
+
+				<h:outputText value="Cliente" style="font-weight: 600;" />
+				<p:outputLabel
+					value="#{despesaBean.financeiroSelecionado.aluno.nome}" />
+
+
+				<h:outputText value="Categoria" style="font-weight: 600;" />
+				<p:outputLabel
+					value="#{despesaBean.financeiroSelecionado.categoria.descricao}" />
+
+
+
+				<h:outputText value="Valor" style="font-weight: 600;" />
+
+				<p:outputLabel value="#{despesaBean.financeiroSelecionado.valor}">
+					<f:convertNumber type="currency" />
+				</p:outputLabel>
+
+				<h:outputText />
+				<h:outputText />
+				<h:outputText />
+				<h:outputText />
+
+				<p:outputLabel value="Status" style="font-weight: 600;" />
+				<h:outputText value="PAGO"
+					style="color:#fff; background-color:#16a50d; padding:8px"
+					rendered="#{despesaBean.financeiroSelecionado.flag eq '1'}" />
+
+
+				<h:outputText
+					style="color:#fff; background-color:#ff0000;padding:8px"
+					value="EM ABERTO "
+					rendered="#{despesaBean.financeiroSelecionado.flag eq '2'}" />
+
+
+
+			</p:panelGrid>
+
+			<hr />
+			<div style="text-align: right">
+				<p:commandButton value="Emitir" icon="fa fa-print" immediate="true"
+					actionListener="#{despesaBean.gerarRecibo}"
+					process="@this"
+					update=":frm:financeiroTable"
+					
+					styleClass="btn btn-sm blue"
+					 />
+			</div>
+
+		</h:panelGroup>
+	</p:dialog>
+
+</ui:composition>

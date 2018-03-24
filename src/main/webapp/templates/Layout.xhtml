@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<ui:include src="Header.xhtml" />
+
+</h:head>
+
+<h:body
+	class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+	
+	<ui:include src="Topo.xhtml" />
+	
+	
+	<div class="clearfix"></div>
+	
+	<div class="page-container">
+		
+	<ui:include src="MenuLateral.xhtml" />
+
+		<div class="page-content-wrapper">
+			<div class="page-content">
+
+				<div class="modal fade" id="portlet-config" tabindex="-1"
+					role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+
+								<h4 class="modal-title">Modal title</h4>
+							</div>
+							<div class="modal-body">Widget settings form goes here</div>
+							<div class="modal-footer">
+								<button type="button" class="btn blue">Save changes</button>
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				
+				<ui:include src="Tema.xhtml" />
+				<div class="page-bar">
+					<ul class="page-breadcrumb">
+						<li><i class="fa fa-home"></i> <a href="index.html">Home</a>
+							<i class="fa fa-angle-right"></i></li>
+						<li><a href="#">Principal</a></li>
+					</ul>
+					<div class="page-toolbar">
+
+						<p:ajaxStatus styleClass="ajax-status">
+							<f:facet name="start">
+								<img style="margin-top: -1px;"
+									src="../resources/img/Preloader_1.gif" />
+							</f:facet>
+							<f:facet name="complete">
+								<h:outputText value="" />
+							</f:facet>
+						</p:ajaxStatus>
+
+					</div>
+				</div>
+
+				<ui:insert name="content" />
+
+			</div>
+
+		</div>
+		<!-- END PORTLET-->
+	</div>
+
+
+
+	<div class="page-footer">
+		<div class="page-footer-inner">2017 &copy; Desenvolvido por
+			Eneylton Barros</div>
+		<div class="scroll-to-top">
+			<i class="icon-arrow-up"></i>
+		</div>
+	</div>
+
+
+
+
+</h:body>
+
+</html>

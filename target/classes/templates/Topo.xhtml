@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<div class="page-header -i navbar navbar-fixed-top">
+
+		
+		<div class="page-header-inner">
+		
+			<div class="page-logo">
+				<a href="index.html"> <img src="../resources/img/logo.png"
+					alt="logo" class="logo-default" />
+				</a>
+				<div class="menu-toggler sidebar-toggler hide"></div>
+			</div>
+
+			<a href="javascript:;" class="menu-toggler responsive-toggler"
+				data-toggle="collapse" data-target=".navbar-collapse"> </a>
+
+			<div class="top-menu">
+				<ul class="nav navbar-nav pull-right">
+
+
+					<li class="dropdown dropdown-extended dropdown-inbox"
+						id="header_inbox_bar"></li>
+
+					<li class="dropdown dropdown-user"><a href="javascript:;"
+						class="dropdown-toggle" data-toggle="dropdown"> <span
+							class="username username-hide-on-mobile"> #{layoutBean.usuarioLogado}</span> <i class="fa fa-angle-down"></i>
+					</a>
+						<ul class="dropdown-menu dropdown-menu-default">
+							<li><a href="extra_profile.html"> <img style="width:175px; height:40px" src="../resources/img/#{layoutBean.autoEscolaImg}"
+					alt="logo" class="logo-default" />
+									
+							</a></li>
+							<li><a href="page_calendar.html"> <i
+									class="icon-calendar"></i>#{layoutBean.autoEscolaLog}
+							</a></li>
+							
+							<li><a href="../Usuario/AlterarSenhaUsuarioLogado.xhtml"> <i
+									class="icon-refresh"></i>Alterar Senha
+							</a></li>
+
+						</ul></li>
+
+					<li class="dropdown dropdown-quick-sidebar-toggler"><a
+						href="../Usuario/Logout.xhtml" class="dropdown-toggle"> <i
+							class="icon-logout"></i>
+					</a></li>
+
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+</html>

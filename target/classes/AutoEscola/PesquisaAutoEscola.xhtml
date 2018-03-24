@@ -1,0 +1,289 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="autoEscola"
+				value="#{cadastroAutoEscolaBean.autoEscola}" />
+
+		</f:metadata>
+
+
+		<h:form id="frm" prependId="false">
+
+			<h:inputHidden id="id"
+				value="#{cadastroAutoEscolaBean.autoEscola.id}" readonly="true" />
+
+
+			<h3 class="page-title">
+				<i class="fa fa-gg" style="color: #1caf9a; font-size: 23px" /> Auto
+				Escola
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<p:commandButton ajax="false" value="Estatística"
+												onclick="this.form.target='_blank'"
+												action="#{cadastroAutoEscolaBean.gerarRelatorio3}"
+												icon="fa fa-bar-chart" immediate="true"
+												styleClass="btn red-intense" />
+
+											<p:spacer style="margin-left:10px" />
+
+
+											<p:commandButton ajax="false" value="Usuários"
+												onclick="this.form.target='_blank'"
+												action="#{cadastroAutoEscolaBean.gerarRelatorio2}"
+												icon="fa fa-lock" immediate="true"
+												styleClass="btn btn-sm yellow" />
+
+
+											<p:spacer style="margin-left:10px" />
+
+											<p:commandButton ajax="false" value="Credenciados"
+												action="#{cadastroAutoEscolaBean.gerarRelatorio}"
+												icon="fa fa-credit-card" immediate="true"
+												styleClass="btn btn-sm green" />
+												
+												<p:spacer style="margin-bottom:10px" />
+												
+										</p:toolbarGroup>
+
+										
+
+										
+										<p:toolbarGroup align="right">
+											<p:commandButton value="Novo" icon="fa fa-plus" id="btn1"
+												styleClass="btn btn-sm blue"
+												action="#{cadastroAutoEscolaBean.prepararNovoCadastro}"
+												process="@this" update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()">
+
+
+												<p:resetInput target="formulario-dialog" />
+											</p:commandButton>
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+
+											<p:commandButton icon="fa fa-pencil" id="btn2"
+												process="@this" update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()"
+												disabled="#{cadastroAutoEscolaBean.autoEscolaSelecionada == null}"
+												styleClass="btn btn-sm yellow ">
+
+
+												<p:resetInput target="formulario-dialog" />
+
+												<f:setPropertyActionListener
+													value="#{cadastroAutoEscolaBean.autoEscolaSelecionada}"
+													target="#{cadastroAutoEscolaBean.autoEscolaEdicao}" />
+											</p:commandButton>
+
+											<p:spacer style="margin-left:10px" />
+
+											<p:commandButton icon="fa fa-trash" process="@this"
+												update=":frm:autoEscolaTable :frm:msgs :frm:toolbar"
+												action="#{cadastroAutoEscolaBean.excluir}"
+												disabled="#{cadastroAutoEscolaBean.autoEscolaSelecionada == null}"
+												styleClass="btn btn-sm red">
+
+
+												<p:confirm icon="fa fa-exclamation-triangle"
+													header="Confirmação de exclusão"
+													message="Tem Certeza que Deseja Excluir essa Auto Escola ?" />
+
+											</p:commandButton>
+
+
+										
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+							</div>
+
+							<p:dataTable value="#{cadastroAutoEscolaBean.listarAutoEscolas}"
+								reflow="true"
+								filteredValue="#{cadastroAutoEscolaBean.pesquisaAltoEscola}"
+								var="autoEscola" widgetVar="autoEscolaTable"
+								emptyMessage="Nenhum Arquivo Cadastrado...." rows="6"
+								paginator="true" paginatorPosition="bottom"
+								style="margin-top: 10px" id="autoEscolaTable"
+								selection="#{cadastroAutoEscolaBean.autoEscolaSelecionada}"
+								selectionMode="single" rowKey="#{autoEscola.id}">
+
+								<f:facet name="header">
+									<p:outputPanel>
+
+										<p:inputText id="globalFilter"
+											onkeyup="PF('autoEscolaTable').filter()" style="width:250px"
+											placeholder="Pesquisar" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:ajax event="rowSelect" update=":frm:toolbar" />
+								<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+								<p:column headerText="Código" priority="1"
+									style="width:100px; text-align:center;">
+									<h:outputText value="#{autoEscola.id}" />
+								</p:column>
+
+								<p:column style="width:200px; text-align:left;"
+									headerText="Nome Fantasia" filterBy="#{autoEscola.nome}"
+									filterable="#{autoEscola.nome}">
+
+									<h:outputText value="#{autoEscola.nome}" />
+								</p:column>
+
+
+								<p:column style="width:200px; " headerText="Razão"
+									filterBy="#{autoEscola.razao}" filterable="#{autoEscola.razao}">
+
+									<h:outputText value="#{autoEscola.razao}" />
+								</p:column>
+
+								<p:column style="width:200px; " headerText="CNPJ"
+									filterBy="#{autoEscola.cnpj}" filterable="#{autoEscola.cnpj}">
+
+									<h:outputText value="#{autoEscola.cnpj}" />
+								</p:column>
+
+
+								<p:column style="width:200px; " headerText="LogoMarca"
+									filterBy="#{autoEscola.logo}" filterable="#{autoEscola.logo}">
+
+									<h:outputText value="#{autoEscola.logo}" />
+								</p:column>
+
+
+
+
+							</p:dataTable>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<p:dialog header="Novo Cadastro" widgetVar="edicaoDialog"
+				style="top: 94.5px !important" id="formulario-dialog"
+				resizable="false" modal="true" responsive="true"
+				closeOnEscape="true" width="300">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<div class="form-group form-md-line-input ">
+
+
+					<div class="input-icon">
+
+						<p:inputText id="nome" placeholder="Nome:"
+							styleClass="form-control"
+							value="#{cadastroAutoEscolaBean.autoEscolaEdicao.nome}"
+							required="true" />
+						<div class="form-control-focus"></div>
+
+					</div>
+
+					<div class="input-icon">
+						<p:inputText id="razao" placeholder="Razão:"
+							styleClass="form-control"
+							value="#{cadastroAutoEscolaBean.autoEscolaEdicao.razao}"
+							required="true" />
+						<div class="form-control-focus"></div>
+
+					</div>
+
+					<div class="input-icon">
+						<p:inputMask mask="99.99.999 / 9999 - 99" id="cnpj"
+							placeholder="CNPJ:" styleClass="form-control"
+							value="#{cadastroAutoEscolaBean.autoEscolaEdicao.cnpj}"
+							required="true" />
+						<div class="form-control-focus"></div>
+
+					</div>
+
+					<div class="input-icon">
+
+						<p:fileUpload styleClass="form-control"
+							fileUploadListener="#{cadastroAutoEscolaBean.handleFileUpload}"
+							label="Foto" auto="true" mode="advanced" dragDropSupport="false"
+							sizeLimit="5000000" fileLimit="1"
+							allowTypes="/(\.|\/)(jpg|png)$/" />
+
+
+					</div>
+
+				</div>
+
+
+				<br />
+				<br />
+
+
+				<p:commandButton value="Salvar" id="salvar-button"
+					icon="fa fa-check" action="#{cadastroAutoEscolaBean.salvar}"
+					process="formulario-dialog" update=":frm:autoEscolaTable :frm:msgs"
+					oncomplete="PF('edicaoDialog').hide()"
+					styleClass="btn btn-sm green" />
+
+			</p:dialog>
+
+
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no btn btn-sm red" icon="fa fa-times" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes btn btn-sm default"
+					icon="fa fa-check" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

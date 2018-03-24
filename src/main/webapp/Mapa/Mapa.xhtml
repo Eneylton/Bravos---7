@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		
+
+
+		<h:form id="frm" prependId="false">
+
+			
+
+
+			<h3 class="page-title">
+				<i class="fa fa-map-marker" style="color: #1caf9a; font-size: 23px" /> Mapas
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Lista
+												de Mapas </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">últimos
+												cadastros </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:button value="Novo" icon="fa fa-plus" id="btn1"
+												styleClass="btn btn-sm green"  />
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:commandButton icon="fa fa-download" 
+												process="@this" 
+												styleClass="btn btn-sm  " />
+
+
+
+											<p:spacer style="margin-left:10px" />
+
+											
+											
+											<p:commandButton icon="fa fa-upload" 
+											    value="Relatório" immediate="true" ajax="false"
+											    
+											    
+												process="@this" action="#{pesquisaAlunoMapaBean.gerarRelatorio}"
+												styleClass="btn btn-sm yellow" />
+
+
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+							</div>
+
+						<p:dataTable value="#{pesquisaAlunoMapaBean.listaMapas}" var="mapa"
+				emptyMessage="Nenhum Arquivo Cadastrado...." rows="13"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+				id="mapaTable">
+
+				<p:column headerText="Código" sortBy="#{mapa.id}"
+					style="width:100px; text-align:center;">
+					<h:outputText value="#{mapa.id}" />
+				</p:column>
+
+				<p:column style="width:200px; text-align:left;"
+					headerText="Nome do mapa" filterBy="#{mapa.nome}"
+					filterable="#{mapa.nome}">
+					<h:outputText value="#{mapa.nome}" />
+				</p:column>
+
+				<p:column style="width:200px; text-align:left;"
+					headerText="Latitude" filterBy="#{mapa.latitude}"
+					filterable="#{mapa.latitude}">
+					<h:outputText value="#{mapa.latitude}" />
+				</p:column>
+
+
+				<p:column style="width:200px; text-align:left;"
+					headerText="Longitude" filterBy="#{mapa.longitude}"
+					filterable="#{mapa.longitude}">
+					<h:outputText value="#{mapa.longitude}" />
+				</p:column>
+
+
+			</p:dataTable>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

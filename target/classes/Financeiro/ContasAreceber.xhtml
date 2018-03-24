@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="msgs" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+			<h3 class="page-title">
+				<p:graphicImage value="../resources/img/kl.png"
+					style="width:45px;height:40px; margin-top:-5px;" />
+				Contas a Receber
+			</h3>
+
+
+			<div class="portlet light ">
+				<div class="portlet-title">
+
+					<p:toolbar id="toolbar"
+						style="margin-top: 10px; background-color:#fff;">
+
+
+						<f:facet name="left">
+
+							<p:commandButton value="Novo Lançamento" icon="fa fa-plus" disabled="true"
+								id="btn1" action="#{contasAreceberBean.prepararNovoCadastro}"
+								process="@this" update="formulario-dialog"
+								oncomplete="PF('edicaoDialog').show()"
+								styleClass="btn btn-sm blue-steel">
+
+
+								<p:resetInput target="formulario-dialog" />
+
+
+							</p:commandButton>
+							<span class="ui-separator"> <span
+								class="ui-icon ui-icon-grip-dotted-vertical" />
+							</span>
+
+							<p:commandButton icon="fa fa-refresh" title="Baixar"
+								value="Baixar" id="btn2" process="@this"
+								update="formulario-dialog"
+								oncomplete="PF('edicaoDialog').show()"
+								disabled="#{contasAreceberBean.financeiroSelecionado == null}"
+								styleClass="btn btn-sm green-meadow">
+
+								<p:resetInput target="formulario-dialog" />
+
+								<f:setPropertyActionListener
+									value="#{contasAreceberBean.financeiroSelecionado}"
+									target="#{contasAreceberBean.financeiroEdicao}" />
+							</p:commandButton>
+
+							<p:spacer style="margin-left:10px;" />
+
+							<p:commandButton icon="fa fa-trash" title="Excluir"
+								value="Excluir" id="btn3" process="@this"
+								update=":frm:financeiroTable :frm:msgs :frm:toolbar"
+								action="#{contasAreceberBean.excluir}"
+								disabled="#{contasAreceberBean.financeiroSelecionado == null}"
+								styleClass="btn btn-sm yellow-casablanca">
+
+								<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+									message="Tem Certeza que Deseja Excluir esse financeiro ?" />
+
+							</p:commandButton>
+
+
+
+
+						</f:facet>
+
+						<f:facet name="right">
+
+							<p:button ajax="false" value="Controle Financeiro"
+								outcome="PainelFinanceiro.xhtml" icon="fa fa-desktop"
+								styleClass="btn btn-sm grey-cascade" />
+
+
+							<span class="ui-separator"> <span
+								class="ui-icon ui-icon-grip-dotted-vertical" />
+							</span>
+
+
+							<p:commandButton ajax="false" value="PDF"
+								action="#{contasAreceberBean.gerarRelatorio}"
+								icon="fa fa-upload" immediate="true"
+								styleClass="btn btn-sm grey-cascade" />
+
+
+
+
+							<p:spacer style="margin-left:10px;" />
+
+							<p:commandButton ajax="false" value="EXCEL"
+								title="Faça a consulta antes" icon="fa fa-download"
+								iconPos="right" immediate="true"
+								styleClass="btn btn-sm grey-cascade">
+
+								<p:dataExporter type="xls" target="financeiroTable"
+									fileName="RelatorioFluxo"
+									postProcessor="#{contasAreceberBean.custumizadoXLS}" />
+							</p:commandButton>
+
+						</f:facet>
+
+
+
+					</p:toolbar>
+				</div>
+			</div>
+
+
+
+			<p:spacer style="margin:5px 0px;" />
+
+			<ui:include src="tabelas/TabelaAreceber.xhtml" />
+
+			<ui:include src="dialog/DialogAreceber.xhtml" />
+
+			<ui:include src="recibo/ReciboAreceber.xhtml" />
+
+		</h:form>
+
+
+
+		<h:form>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

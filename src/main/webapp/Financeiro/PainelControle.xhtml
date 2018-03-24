@@ -1,0 +1,135 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<o:viewParam name="financeiro"
+				value="#{financeiroCrossBean.financeiro}" />
+		</f:metadata>
+
+
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-dollar"></i> Painel de Controle Financeiro
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+		<h:form id="frm" prependId="false">
+			<h:inputHidden id="id" value="#{financeiroCrossBean.financeiro.id}" />
+			<p:messages id="messages" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+
+			<p:spacer style="margin-top:30px;" />
+
+
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="panel with-nav-tabs panel-primary">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+
+								<li class="active"><a href="#tab1" data-toggle="tab"><i
+										class="fa fa-calendar" /> Consulta por Período</a></li>
+
+								<li><a href="#tab2" data-toggle="tab"><i
+										class="fa fa-plus" style="color: #00ff4e" /> Caixa |
+										(Receita)</a></li>
+
+								<li><a href="#tab3" data-toggle="tab"><i
+										class="fa fa-minus" style="color: #ff0000" /> Caixa |
+										(Despesa)</a></li>
+
+								<li><a href="#tab4" data-toggle="tab"><i
+										class="fa fa-plus" style="color: #00ff4e" /> Banco |
+										(Receita)</a></li>
+
+								<li><a href="#tab5" data-toggle="tab"><i
+										class="fa fa-minus" style="color: #ff0000" /> Banco |
+										(Despesa)</a></li>
+
+
+							</ul>
+						</div>
+
+						<div class="panel-body">
+							<div class="tab-content">
+
+
+								<div class="tab-pane fade in active" id="tab1">
+									<p:commandButton value="Relatório" icon="fa fa-file-text-o"
+										action="#{financeiroCrossBean.gerarRelatorioPeriodo}"
+										update="frm" styleClass="btn btn-info btn-sm dropdown-toggle"
+										style="padding:5px;text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+                                 
+									<p:spacer style="margin-top:60px;" />
+									<ui:include src="Tabela.xhtml" />
+								</div>
+
+								<div class="tab-pane fade" id="tab2">
+
+									<p:commandButton value="Relatório" icon="fa fa-file-text-o"
+										action="#{crossTableBean.gerarRelatorioReceita}" update="frm"
+										styleClass="btn btn-info btn-sm dropdown-toggle"
+										style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+									<p:spacer style="margin-top:60px;" />
+
+									<ui:include src="CrossTable.xhtml" />
+								</div>
+
+								<div class="tab-pane fade" id="tab3">
+
+									<p:commandButton value="Relatório" icon="fa fa-file-text-o"
+										action="#{crossTable2Bean.gerarRelatorioDespesa}"
+										styleClass="btn btn-warning" update="frm" />
+									<p:spacer style="margin-top:60px;" />
+									<ui:include src="CrossTable2.xhtml" />
+								</div>
+
+
+								<div class="tab-pane fade" id="tab4">
+
+									<p:commandButton value="Relatório" icon="fa fa-file-text-o"
+										action="#{crossTable3Bean.gerarRelatorioReceitaBanco}"
+										styleClass="btn btn-warning" update="frm" />
+									<p:spacer style="margin-top:60px;" />
+									<ui:include src="CrossTable3.xhtml" />
+								</div>
+
+								<div class="tab-pane fade" id="tab5">
+
+									<p:commandButton value="Relatório" icon="fa fa-file-text-o"
+										action="#{crossTable4Bean.gerarRelatorioDespesaBanco}"
+										styleClass="btn btn-warning" update="frm" />
+									<p:spacer style="margin-top:60px;" />
+									<ui:include src="CrossTable4.xhtml" />
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

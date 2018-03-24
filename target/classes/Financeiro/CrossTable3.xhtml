@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	>
+	
+	
+
+				<p:dataTable value="#{crossTable3Bean.listarCrossTable}" var="cross"
+					widgetVar="crossTable3" emptyMessage="Nenhum Arquivo Cadastrado...."
+					rows="13" paginator="true" paginatorPosition="bottom"
+					id="crossTable3">
+					
+					<f:facet name="header">
+					<p:outputPanel>
+
+						<p:outputLabel value="Receita (Banco)" style="font-size:16px; color:#666" />
+					</p:outputPanel>
+				</f:facet>
+
+
+					<p:column headerText="Categoria">
+						
+							
+							<h:outputText value="#{cross.categoria.descricao}" style="font-size:11px" />
+					
+					</p:column>
+
+					<p:column headerText="Janeiro">
+						
+							<h:outputText value="#{cross.janeiro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+					<p:column headerText="Feveriro">
+				
+							<h:outputText value="#{cross.fevereiro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+
+					<p:column headerText="Março">
+						
+							<h:outputText value="#{cross.marco}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+					
+											</p:column>
+
+					<p:column headerText="Abril">
+						
+							<h:outputText value="#{cross.abril}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+					
+					</p:column>
+
+					<p:column headerText="Maio">
+						
+							<h:outputText value="#{cross.maio}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+					
+					</p:column>
+
+
+					<p:column headerText="Junho">
+					
+							<h:outputText value="#{cross.junho}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+					<p:column headerText="Julho">
+				
+							<h:outputText value="#{cross.julho}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+		
+					</p:column>
+
+					<p:column headerText="Agosto">
+						
+							<h:outputText value="#{cross.agosto}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+					<p:column headerText="Setembro">
+					
+							<h:outputText value="#{cross.setembro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+		
+					</p:column>
+
+
+					<p:column headerText="Outubro">
+					
+							<h:outputText value="#{cross.outubro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+					<p:column headerText="Novembro">
+					
+							<h:outputText value="#{cross.novembro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						
+					</p:column>
+
+					<p:column headerText="Dezembro">
+			
+							<h:outputText value="#{cross.dezembro}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+		
+					</p:column>
+					
+					
+					<p:column headerText="TOTAL">
+				
+							<h:outputText value="#{cross.totalProduto}" style="font-size:11px">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+		
+					</p:column>
+					
+
+
+				</p:dataTable>
+
+</ui:composition>

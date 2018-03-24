@@ -1,0 +1,48 @@
+<ui:composition template="/templates/LayoutLogin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<o:viewParam name="usuario" value="#{loginBean.usuario}" />
+		</f:metadata>
+
+
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+		<h:form class="login-form">
+
+			<div class="form-group">
+				
+				<label class="control-label visible-ie8 visible-ie9">Login</label> 
+				   <p:inputText placeholder="Login" id="login" maxlength="20" styleClass="form-control"
+							value="#{loginBean.usuario.login}" required="true"
+							requiredMessage="Usuário deve ser informado." />
+						<p:watermark for="login" value="Login" />
+			</div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Senha</label> 
+				   <p:password placeholder="Senha" id="senha" value="#{loginBean.usuario.senha}" styleClass="form-control"
+							required="true" requiredMessage="Senha deve ser informada." />
+						<p:watermark for="senha" value="Senha" />
+			</div>
+			<div class="form-actions">
+				<h:commandButton action="#{loginBean.authenticate}" 
+				type="submit" class="btn btn-success uppercase" value="Entrar" />
+
+				<a href="javascript:;" id="forget-password" class="forget-password">Esqueceu
+					sua Senha ?</a>
+			</div>
+
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

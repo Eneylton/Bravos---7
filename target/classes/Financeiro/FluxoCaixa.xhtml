@@ -1,0 +1,206 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="frm" prependId="false">
+			<h:inputHidden id="idaluno" value="#{pesquisaAlunoBean.aluno.id}"
+				readonly="true" />
+
+
+			<h3 class="page-title">
+				<p:graphicImage value="../resources/img/Financeiro.png"
+					style="width: 41px;height: 35px; margin-top: -17px;" />
+				<span style="margin-left: 10px;">Transações</span>
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+
+
+											<div class="row">
+												<div class="col-md-4">
+													<div class="easy-pie-chart">
+														<div class="number transactions" data-percent="55">
+															<span> <p:progressBar styleClass="animated" style="border-color:1px solid color:#ffffff;" 
+																	value="77" labelTemplate="{value}%" displayOnly="true" />
+															</span>
+															<p:spacer style="margin-bottom:10px;" />
+														</div>
+														<a class="title" href="javascript:;"> Transações <i
+															class="icon-arrow-right"></i>
+														</a>
+													</div>
+												</div>
+												<div class="margin-bottom-10 visible-sm"></div>
+												<div class="col-md-4">
+													<div class="easy-pie-chart">
+														<div class="number visits" data-percent="85">
+															<span> <p:progressBar styleClass="animated semBorda"
+																	value="25" labelTemplate="{value}%" displayOnly="true" />
+															</span>
+															
+															<p:spacer style="margin-bottom:10px;" />
+
+														</div>
+														<a class="title" href="javascript:;"> Recebimentos <i
+															class="icon-arrow-right"></i>
+														</a>
+													</div>
+												</div>
+												<div class="margin-bottom-10 visible-sm"></div>
+												<div class="col-md-4">
+													<div class="easy-pie-chart">
+														<div class="number bounce" data-percent="46">
+															<span> <p:progressBar styleClass="animated semBorda"
+																	value="80" labelTemplate="{value}%" displayOnly="true" />
+															</span>
+															<p:spacer style="margin-bottom:10px;" />
+														</div>
+														<a class="title" href="javascript:;"> Despesas <i
+															class="icon-arrow-right"></i>
+														</a>
+													</div>
+												</div>
+
+
+											</div>
+										
+											<p:spacer style="margin-bottom:115px;" />
+											
+										
+											<p:commandButton value="Novo Lançamento" icon="fa fa-plus"
+												id="btn1" action="#{financeiroBean.prepararNovoCadastro}"
+												process="@this" update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()"
+												styleClass="btn btn-sm blue">
+
+												<p:resetInput target="formulario-dialog" />
+
+
+											</p:commandButton>
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:commandButton icon="fa fa-refresh" title="Baixar"
+												value="Baixa Pagamento" id="btn2" process="@this"
+												update="formulario-dialog"
+												oncomplete="PF('edicaoDialog').show()"
+												disabled="#{financeiroBean.financeiroSelecionado == null}"
+												styleClass="btn btn-sm blue-hoki">
+
+												<p:resetInput target="formulario-dialog" />
+
+												<f:setPropertyActionListener
+													value="#{financeiroBean.financeiroSelecionado}"
+													target="#{financeiroBean.financeiroEdicao}" />
+											</p:commandButton>
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:commandButton icon="fa fa-trash" title="Excluir Lançamento"
+												 id="btn3" process="@this"
+												update=":frm:financeiroTable :frm:msgs :frm:toolbar"
+												action="#{financeiroBean.excluir}"
+												disabled="#{financeiroBean.financeiroSelecionado == null}"
+												styleClass="btn btn-sm blue-ebonyclay">
+
+												<p:confirm icon="ui-icon-alert"
+													header="Confirmação de exclusão"
+													message="Tem Certeza que Deseja Excluir esse financeiro ?" />
+
+											</p:commandButton>
+											
+											<p:commandButton icon="fa fa-upload"  update=":frm:msgs :frm:toolbar"
+												 process="@this" styleClass="btn btn-sm blue-ebonyclay"
+												 action="#{financeiroBean.gerarRelatorio}" />
+											
+												
+
+
+										</p:toolbarGroup>
+
+
+										<p:toolbarGroup align="right">
+
+
+											<div class="tiles">
+
+												<div class="tile bg-primary">
+												<p:link outcome="PainelFinanceiro">
+													<div class="tile-body">
+														<i class="icon-layers"></i>
+													</div>
+													</p:link>
+													<div class="tile-object">
+														<div class="name">Financeiro</div>
+														<div class="number"></div>
+													</div>
+												
+												</div>
+
+												<div class="tile bg-blue">
+													<div class="tile-body">
+														<i class="fa fa-bar-chart-o"></i>
+													</div>
+													<div class="tile-object">
+														<div class="name">Estatísticas</div>
+														<div class="number"></div>
+													</div>
+												</div>
+
+											</div>
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+
+								</div>
+							</div>
+
+							<ui:include src="tabelas/TabelaFluxo.xhtml" />
+
+							<ui:include src="dialog/DialogFluxo.xhtml" />
+
+							<ui:include src="recibo/ReciboFluxo.xhtml" />
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

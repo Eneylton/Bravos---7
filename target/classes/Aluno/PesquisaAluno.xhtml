@@ -1,0 +1,197 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="aluno" value="#{pesquisaAlunoBean.aluno}" />
+
+		</f:metadata>
+
+
+		<h:form id="frm" prependId="false">
+
+			<h:inputHidden id="idaluno" value="#{pesquisaAlunoBean.aluno.id}"
+				readonly="true" />
+
+
+
+			<h3 class="page-title">
+				<i class="icon-user" style="color: #1caf9a; font-size: 23px;" /><span
+					style="margin-left: 10px;">Alunos</span>
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Lista
+												de alunos </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">últimos
+												cadastros </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:button value="Novo" icon="fa fa-plus" id="btn1"
+												styleClass="btn btn-sm green" outcome="Aluno" />
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:button outcome="LocalizacaoAluno.xhtml" icon="fa fa-map-marker" process="@this" 
+												styleClass="btn red-intense" />
+
+
+
+											<p:spacer style="margin-left:10px" />
+
+
+
+											<p:commandButton icon="fa fa-upload" process="@this"
+												styleClass="btn grey-cascade" />
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+							</div>
+
+							<p:dataTable value="#{pesquisaAlunoBean.listaAlunos}"
+								reflow="true"
+								filteredValue="#{pesquisaAlunoBean.pesquisaAlunos}" var="aluno"
+								widgetVar="alunoTable"
+								emptyMessage="Nenhum Arquivo Cadastrado...." rows="10"
+								paginator="true" paginatorPosition="bottom"
+								style="margin-top: 10px" id="pesquisaalunoDT"
+								selection="#{pesquisaAlunoBean.alunoSelecionado}"
+								selectionMode="single" rowKey="#{aluno.id}">
+
+								<f:facet name="header">
+									<p:outputPanel>
+
+										<p:inputText id="globalFilter"
+											onkeyup="PF('alunoTable').filter()" style="width:250px"
+											placeholder="Pesquisar" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="Aluno" filterBy="#{aluno.nome}"
+									filterable="#{aluno.nome}">
+									<i class="fa fa-user" />
+									<p:spacer style="width:10px" />
+									<h:outputText value="#{aluno.nome}" />
+								</p:column>
+
+
+								<p:column headerText="CPF">
+									<i class="fa fa-circle-o" />
+									<p:spacer style="width:10px" />
+									<h:outputText value="#{aluno.cpf}" />
+								</p:column>
+
+
+
+								<p:column headerText="Email" filterBy="#{aluno.email}"
+									filterable="#{aluno.email}">
+									<i class="fa fa-envelope" />
+									<p:spacer style="width:10px" />
+									<h:outputText value="#{aluno.email}" />
+								</p:column>
+
+								<p:column headerText="Whatsapp" filterBy="#{aluno.whatsapp}"
+									filterable="#{aluno.whatsapp}">
+									<i class="fa fa-whatsapp" />
+									<p:spacer style="width:10px" />
+									<h:outputText value="#{aluno.whatsapp}" />
+								</p:column>
+
+								<p:column headerText="Ações">
+
+
+									<p:button type="button" styleClass="btn blue dropdown-toggle" 
+										disabled="#{segurancaBean.permitido}"  title="Financeiro"
+										outcome="FinanceiroAluno" icon="fa fa-money">
+
+										<f:param name="aluno" value="#{aluno.id}" />
+
+									</p:button>
+
+									<p:spacer style="margin-left:10px" />
+
+									<p:button outcome="Aluno" icon="fa fa-pencil" title="Editar"
+										styleClass="btn btn-xs yellow"
+										disabled="#{segurancaBean.permitido}">
+										<f:param name="aluno" value="#{aluno.id}" />
+									</p:button>
+									<p:spacer style="margin-left:10px" />
+
+
+									<p:commandButton icon="fa fa-trash" title="Excluir"
+										styleClass="btn btn-xs red"
+										disabled="#{segurancaBean.permitido}"
+										oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+										update=":frm:confirmacaoExclusaoDialog">
+										<f:setPropertyActionListener
+											target="#{pesquisaAlunoBean.alunoSelecionado}"
+											value="#{aluno}" />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+
+
+							<p:confirmDialog id="confirmacaoExclusaoDialog"
+								widgetVar="confirmacaoExclusao"
+								message="Tem certeza que deseja excluir o Usuário #{pesquisaAlunoBean.alunoSelecionado.nome}?"
+								header="Exclusão de Usuário" severity="alert">
+								<p:button value="Não" styleClass="btn btn-xs red"
+									icon="fa fa-close"
+									onclick="PF('confirmacaoExclusao').hide(); return false;" />
+								<p:commandButton value="Sim" update=":frm:pesquisaalunoDT"
+									styleClass="btn btn-xs blue" icon="fa fa-check"
+									onclick="confirmacaoExclusao.hide()"
+									action="#{pesquisaAlunoBean.excluir}" />
+							</p:confirmDialog>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>

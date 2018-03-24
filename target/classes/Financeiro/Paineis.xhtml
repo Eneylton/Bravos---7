@@ -1,0 +1,232 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<br />
+
+	<br />
+
+	<div class="col-lg-3 col-md-4" style="margin-left: -15px;">
+
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-plus-circle fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">
+							<h:outputText style="font-size:18px" id="mov"
+								value="#{painelFinanceiroBean.movimentado}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</div>
+						<div>Faturamento do Dia !</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				<h:link outcome="FluxoCaixa.xhtml" style="color:#1aab1a">
+					<span class="pull-left">Valor Recebido.</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</h:link>
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+	<div class="col-lg-3 col-md-4">
+
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-minus-circle fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">
+							<h:outputText style="font-size:18px"
+								value="#{painelFinanceiroBean.movimentadoDespesa}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</div>
+						<div>Despesas Dia !</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				<h:link outcome="Despesa.xhtml" style="color:#d9534f">
+					<span class="pull-left">Saida de Caixa</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</h:link>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+
+	<div class="col-lg-3 col-md-4">
+
+		<div class="panel panel-yellow">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-calendar-plus-o fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">
+							<h:outputText style="font-size:18px"
+								value="#{painelFinanceiroBean.receber}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</div>
+						<div>Contas a Receber !</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				<h:link outcome="ContasAreceber.xhtml" style="color:#f0ad4e">
+					<span class="pull-left">Mais Detalhes</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</h:link>
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+	<div class="col-lg-3 col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-calendar-minus-o fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">
+
+							<h:outputText style="font-size:18px"
+								value="#{painelFinanceiroBean.pagar}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+
+
+						</div>
+						<div>Contas a Pagar!</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				<h:link outcome="ContasApagar.xhtml" style="color:#1592d0">
+					<span class="pull-left">Mais Detalhes</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</h:link>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="col-md-6">
+
+		<div class="panel panel-default" style="margin-left: -15px;">
+			<div class="panel-heading">
+				<i class="fa fa-refresh" /> Resumo Geral
+
+				<div class="pull-right">
+					<div class="btn-group">
+
+						<p:button icon="fa fa-dollar" outcome="FluxoCaixa.xhtml"
+							value="Fluxo de caixa"
+							styleClass="btn btn-primary btn-xs dropdown-toggle"
+							style="  text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="panel-body">
+				<div id="morris-line-chart">
+
+
+					<div class="alert alert-success">
+						<a href="Financeiro.xhtml"
+							class="btn btn-xs btn-success pull-right"> <i
+							class="fa fa-plus"></i> <p:spacer style="margin-left:12px;" /> 
+							<h:outputText 	value="#{painelFinanceiroBean.recebido}">
+								
+								<f:convertNumber type="currency" />
+							</h:outputText>
+
+
+						</a> <strong>Lançamentos Registrados:</strong> Pagamentos Realizados.
+					</div>
+
+					<div class="alert alert-info">
+						<a href="Receita.xhtml" class="btn btn-xs btn-info pull-right">
+							<i class="fa fa-refresh"></i> <p:spacer style="margin-left:12px;" />
+
+							<h:outputText style="text-align:left"
+								value="#{painelFinanceiroBean.movimentadoBanco}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+
+
+						</a> <strong>Movimentações Bancárias:</strong> Saques / Depósitos.
+					</div>
+
+
+					<div class="alert alert-danger">
+						<a href="Atrasado.xhtml" class="btn btn-xs btn-danger pull-right">
+							<i class="fa fa-refresh"></i> <p:spacer style="margin-left:12px;" />
+
+							<h:outputText value="#{painelFinanceiroBean.atrasado}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+
+
+						</a> <strong>Pendências:</strong> Pagamentos Atrasados.
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="col-md-6">
+	
+	<a href="../Grafico/Grafico.xhtml" >
+
+		
+	</a>	
+
+	</div>
+
+
+</ui:composition>

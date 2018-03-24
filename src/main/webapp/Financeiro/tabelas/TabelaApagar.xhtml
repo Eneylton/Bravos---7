@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<p:dataTable value="#{contasApagarBean.listaFinanceiros}" rowsPerPageTemplate="15,20,30"
+		var="financeiro" widgetVar="financeiroTable" reflow="true"
+		emptyMessage="Nenhum Arquivo Cadastrado...." rows="13"
+		paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+		id="financeiroTable"
+		selection="#{contasApagarBean.financeiroSelecionado}"
+		selectionMode="single" rowKey="#{financeiro.id}">
+
+		<f:facet name="header">
+			<p:outputPanel>
+				<p:spacer style="margin:15px 0px;" />
+
+				<p:inputText id="globalFilter" style="width:350px"
+					onkeyup="PF('financeiroTable').filter()" placeholder="Pesquisar" />
+			</p:outputPanel>
+		</f:facet>
+
+		<p:ajax event="rowSelect" update=":frm:toolbar" />
+		<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+		<p:column exportable="false" headerText="#" style="width:20px; text-align:center;">
+			<h:graphicImage value="../resources/img/despesa.png"
+				rendered="#{financeiro.tipo eq '2'}" />
+			<h:graphicImage value="../resources/img/receita.png"
+				rendered="#{financeiro.tipo eq '1'}" />
+
+		</p:column>
+
+		<p:column exportable="false" headerText="Situação" style="width:50px; text-align:left;">
+
+			<span class="label label-success"><h:outputText value="PAGO"
+					style="color:#fff" rendered="#{financeiro.flag eq '1'}" /></span>
+
+			<span class="label label-danger"><h:outputText
+					style="color:#fff" value="EM ABERTO "
+					rendered="#{financeiro.flag eq '2'}" /></span>
+
+
+		</p:column>
+
+		<p:column headerText="Cliente / Fornecedor"
+			sortBy="#{financeiro.aluno.nome}" filterBy="#{financeiro.aluno.nome}"
+			filterable="#{financeiro.aluno.nome}"
+			style="width:80px; text-align:left;">
+
+			<h:outputLabel value="#{financeiro.aluno.nome}" />
+		</p:column>
+
+		<p:column headerText="Categoria"
+			sortBy="#{financeiro.categoria.descricao}"
+			filterBy="#{financeiro.categoria.descricao}"
+			filterable="#{financeiro.categoria.descricao}"
+			style="width:60px; text-align:left;">
+
+			<h:outputLabel value="#{financeiro.categoria.descricao}" />
+		</p:column>
+		
+			<p:column headerText="Vencimento" sortBy="#{financeiro.data}"
+			filterBy="#{financeiro.data}" filterable="financeiro.data"
+			style="width:60px; text-align:center;">
+			<i class="fa fa-calendar" />
+			<p:spacer style="margin-left:10px;" />
+			<h:outputText value="#{financeiro.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+
+		</p:column>
+		
+		
+<p:column exportable="false" headerText="Previsão" style="width:115px; text-align:left;">
+			<span class="label label-success"><h:outputText
+					value="DIA DO PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq 'DIA DO PAGAMENTO'}" /></span>
+
+			<span class="label label-info"><h:outputText
+					value="AQUARDANDO PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq 'AQUARDANDO PAGAMENTO'}" /></span>
+
+			<span class="label label-warning"><h:outputText
+					value="05 DIAS PARA O PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq '05 DIAS PARA O PAGAMENTO'}" /></span>
+
+			<span class="label label-warning"><h:outputText
+					value="04 DIAS PARA O PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq '04 DIAS PARA O PAGAMENTO'}" /></span>
+
+			<span class="label label-warning"><h:outputText
+					value="03 DIAS PARA O PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq '03 DIAS PARA O PAGAMENTO'}" /></span>
+
+			<span class="label label-success"><h:outputText
+					value="02 DIAS PARA O PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq '02 DIAS PARA O PAGAMENTO'}" /></span>
+
+
+			<span class="label label-default"><h:outputText
+					value="FALTA UM DIA PARA O PAGAMENTO !" style="color:#fff"
+					rendered="#{financeiro.dia eq 'FALTA UM DIA PARA O PAGAMENTO'}" /></span>
+
+			<span class="label label-danger"><h:outputText
+					value="PAGAMENTO ATRASADO !" style="color:#fff"
+					rendered="#{financeiro.dia eq 'ATRASADO'}" /></span>
+
+
+		</p:column>
+		
+		<p:column headerText="Valor" style="width:50px; text-align:left; ">
+
+			<h:outputLabel value="#{financeiro.valor}" style="font-weight:normal;
+			    color:#666" rendered="#{financeiro.tipo eq '1'}" >
+				<f:convertNumber type="currency" minFractionDigits="2" />
+			</h:outputLabel>
+			
+			<h:outputLabel value="#{financeiro.valor}" style="font-weight:normal;
+			    color:#ff0000" rendered="#{financeiro.tipo eq '2'}" >
+				<f:convertNumber type="currency" minFractionDigits="2" />
+			</h:outputLabel>
+		</p:column>
+		
+		<p:column headerText="Emitir Recibo" exportable="false"
+			style="width:60px; text-align:center;">
+			
+			<p:commandButton icon="fa fa-file-text-o" process="@this"  rendered="#{ financeiro.flag eq '1'}"
+				styleClass="btn btn-info" update=":frm:fichaCadastralDialog"
+				title="Recibo" oncomplete="PF('fichaDialog').show();">
+				<f:setPropertyActionListener value="#{financeiro}"
+					target="#{contasApagarBean.financeiroSelecionado}" />
+			</p:commandButton>
+			
+			
+			<p:commandButton icon="fa fa-file-text-o" process="@this" disabled="true"  rendered="#{financeiro.flag eq '2'}"
+				styleClass="btn btn-info" update=":frm:fichaCadastralDialog"
+				title="Recibo"  oncomplete="PF('fichaDialog').show();">
+				<f:setPropertyActionListener value="#{financeiro}"
+					target="#{contasApagarBean.financeiroSelecionado}" />
+			</p:commandButton>
+			
+			
+		</p:column>
+		
+		<p:columnGroup type="footer">
+			<p:row>
+				<p:column colspan="6" footerText="Valor Total:"
+					style="text-align:right; " />
+
+				<p:column colspan="2" footerText="R$"
+					style="text-align:left; ">
+
+					<f:facet name="footer">
+						<h:outputText style="text-align:left"
+							value="#{contasApagarBean.apagar}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</f:facet>
+
+
+				</p:column>
+			</p:row>
+		</p:columnGroup>
+		
+		
+	</p:dataTable>
+
+
+
+</ui:composition>

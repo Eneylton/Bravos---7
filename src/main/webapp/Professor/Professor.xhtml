@@ -1,0 +1,193 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="professor"
+				value="#{cadastroProfessorBean.professor}" />
+
+		</f:metadata>
+
+		<h1 class="aw-page-title">
+			<i class="fa fa-suitcase"></i> Professor
+		</h1>
+
+		<p:separator style="margin:-10px 0px;" />
+
+
+		<h:form id="frm" prependId="false">
+
+			<p:messages id="msgs" closable="true">
+				<p:effect type="pulsate" event="load" delay="500" />
+			</p:messages>
+
+
+			<h:inputHidden id="idprofessor"
+				value="#{cadastroProfessorBean.professor.id}" readonly="true" />
+
+			
+				<p:toolbar id="toolbar"  style="margin-top: 20px; background-color:#fff;" >
+				<p:toolbarGroup>
+					<p:commandButton value="Nova" icon="fa fa-plus" id="btn1"
+					
+						action="#{cadastroProfessorBean.prepararNovoCadastro}" process="@this"
+						update="formulario-dialog" oncomplete="PF('edicaoDialog').show()"
+						
+						styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px;    text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " >
+						
+						
+						<p:resetInput target="formulario-dialog" />
+					</p:commandButton>
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+
+					<p:commandButton icon="fa fa-pencil" title="Editar" value="Editar" 
+						id="btn2" process="@this"
+						update="formulario-dialog" oncomplete="PF('edicaoDialog').show()"
+						disabled="#{cadastroProfessorBean.professorSelecionada == null}"
+						styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px; text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " >
+						
+						
+						<p:resetInput target="formulario-dialog" />
+
+						<f:setPropertyActionListener
+								value="#{cadastroProfessorBean.professorSelecionada}"
+							target="#{cadastroProfessorBean.professorEdicao}" />
+					</p:commandButton>
+
+					<p:spacer style="margin-left:10px" />
+
+						<p:commandButton icon="fa fa-trash" title="Excluir" value="Excluir"
+						process="@this"
+						update=":frm:professorTable :frm:msgs :frm:toolbar"
+						action="#{cadastroProfessorBean.excluir}"
+						disabled="#{cadastroProfessorBean.professorSelecionada == null}"
+						styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px; text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " >
+						
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+							message="Tem Certeza que Deseja Excluir esse Professor ?" />
+
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+			</p:toolbar>
+			<p:spacer style="margin:5px 0px;" />
+
+
+			<p:dataTable value="#{cadastroProfessorBean.listarProfessores}"
+				filteredValue="#{cadastroProfessorBean.pesquisafessores}"
+				var="professor" widgetVar="professorTable"
+				emptyMessage="Nenhum Arquivo Cadastrado...." rows="13"
+				paginator="true" paginatorPosition="bottom" style="margin-top: 10px"
+				id="professorTable"
+				selection="#{cadastroProfessorBean.professorSelecionada}"
+				selectionMode="single" rowKey="#{professor.id}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+
+						<p:inputText id="globalFilter"
+							 onkeyup="PF('professorTable').filter()" style="width:450px"
+							placeholder="Pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<p:column headerText="Código" sortBy="#{professor.id}"
+					style="width:100px; text-align:center;">
+					<h:outputText value="#{professor.id}" />
+				</p:column>
+
+				<p:column style="width:200px; text-align:left;"
+					headerText="Nome do Professor" filterBy="#{professor.nome}"
+					filterable="#{professor.nome}">
+					<h:outputText value="#{professor.nome}" />
+				</p:column>
+
+
+			</p:dataTable>
+
+
+			<p:dialog header="Novo Professor" widgetVar="edicaoDialog"
+				id="formulario-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" closable="true">
+					<p:effect type="pulsate" event="load" delay="500" />
+				</p:messages>
+				<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+				<p:panelGrid columns="2" id="painel-dialog" styleClass="semBorda">
+				
+					<p:outputLabel value="Nome" />
+
+					<p:inputText id="titulo" size="60" maxlength="80" style="width:350px"
+						styleClass="form-control"
+						value="#{cadastroProfessorBean.professorEdicao.nome}"
+						required="true" />
+						
+				</p:panelGrid>
+
+
+					<hr />
+					
+						<p:commandButton value="Salvar" id="salvar-button"
+							icon="ui-icon-check" action="#{cadastroProfessorBean.salvar}"
+							process="formulario-dialog"
+							update=":frm:professorTable :frm:msgs-dialog :frm:painel-dialog"
+							oncomplete="if (!args.validationFailed) PF('edicaoDialog').hide()" 
+							styleClass="btn btn-default btn-sm dropdown-toggle"
+								style="padding:5px; text-shadow: 0 1px 0 rgba(230, 69, 69, 0); 
+								-moz-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0);
+   								-webkit-box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); 
+                                 box-shadow: inset 0 1px 0 rgba(230, 69, 69, 0); " />
+						
+
+				
+
+			
+			</p:dialog>
+
+		</h:form>
+
+		<h:form>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			</p:confirmDialog>
+		</h:form>
+
+
+
+	
+
+
+	</ui:define>
+
+</ui:composition>

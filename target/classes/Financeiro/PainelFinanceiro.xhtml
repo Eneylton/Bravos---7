@@ -1,0 +1,220 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+
+		<h:form id="frm" prependId="false">
+
+
+
+
+			<h3 class="page-title">
+				<p:graphicImage value="../resources/img/hj.png"
+					style="width:65px;height:40px; margin-top:-5px;" />
+				Financeiro
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+							<div class="row">
+
+								<!-- RECEITA -->
+
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="dashboard-stat blue-madison">
+										<div class="visual">
+											<i class="fa fa-plus-circle"></i>
+										</div>
+										<div class="details">
+											<div class="number">
+
+												<h:outputText style="font-size:18px; color:#a9ffad" id="mov"
+													value="#{painelFinanceiroBean.totalDia}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+											</div>
+											<div class="desc">Faturamento do Dia</div>
+										</div>
+										<a class="more" href="FluxoCaixa.xhtml"> Relatório Geral <i
+											class="m-icon-swapright m-icon-white"></i>
+										</a>
+									</div>
+								</div>
+
+
+								<!-- DESPESAS -->
+
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="dashboard-stat red-intense">
+										<div class="visual">
+											<i class="fa fa-minus-circle"></i>
+										</div>
+										<div class="details">
+											<div class="number">
+
+												<h:outputText style="font-size:18px; color:#ffa0ac"
+													value="#{painelFinanceiroBean.movimentadoDespesa}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+											</div>
+											<div class="desc">Total de Despesas</div>
+										</div>
+										<a class="more" href="Despesa.xhtml"> Relatório Geral <i
+											class="m-icon-swapright m-icon-white"></i>
+										</a>
+									</div>
+								</div>
+
+
+								<!-- A RECEBER -->
+
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="dashboard-stat yellow-crusta">
+										<div class="visual">
+											<i class="fa fa-calendar-plus-o fa-5x"></i>
+										</div>
+										<div class="details">
+											<div class="number">
+
+												<h:outputText style="font-size:18px; color:#e04a00"
+													value="#{painelFinanceiroBean.receber}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+											</div>
+											<div class="desc">Contas a Receber</div>
+										</div>
+										<a class="more" href="ContasAreceber.xhtml"> Relatório Geral <i
+											class="m-icon-swapright m-icon-white"></i>
+										</a>
+									</div>
+								</div>
+
+
+								<!-- A PAGAR -->
+
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+									<div class="dashboard-stat green-turquoise">
+										<div class="visual">
+											<i class="fa fa-calendar-minus-o fa-5x"></i>
+										</div>
+										<div class="details">
+											<div class="number">
+
+												<h:outputText style="font-size:18px; color:#2a635e"
+													value="#{painelFinanceiroBean.pagar}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+											</div>
+											<div class="desc">Contas a Pagar</div>
+										</div>
+										<a class="more" href="ContasApagar.xhtml"> Relatório Geral <i
+											class="m-icon-swapright m-icon-white"></i>
+										</a>
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<hr />
+
+
+							<div class="col-md-6">
+
+								<div class="portlet box default" style="margin-left: -15px;">
+									<div class="portlet-title">
+										<div class="caption">
+											<i class="fa fa-refresh"></i><span style="color: #000">Controle</span>
+										</div>
+										<div class="tools">
+											<a href="javascript:;" class="collapse"> </a> <a
+												href="#portlet-config" data-toggle="modal" class="config">
+											</a> <a href="javascript:;" class="reload"> </a>
+										</div>
+									</div>
+
+									<div class="portlet-body">
+
+										<div class="alert alert-success">
+											<a href="FluxoCaixa.xhtml"
+												class="btn btn-xs green-jungle pull-right"> <i
+												class="fa fa-plus"></i> <p:spacer style="margin-left:12px;" />
+												<h:outputText value="#{financeiroBean.movimentado}">
+
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+
+											</a> <strong>Lançamentos</strong>
+											Realizados.
+										</div>
+
+										<div class="alert alert-info">
+											<a href="Receita.xhtml"
+												class="btn btn-xs blue-madison pull-right"> <i
+												class="fa fa-refresh"></i> <p:spacer
+													style="margin-left:12px;" /> <h:outputText
+													style="text-align:left"
+													value="#{painelFinanceiroBean.movimentadoBanco}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+
+											</a> <strong>Movimentações Bancárias:</strong> Saques /
+											Depósitos.
+										</div>
+
+										<div class="alert alert-danger">
+											<a href="Atrasado.xhtml"
+												class="btn btn-xs red-thunderbird pull-right"> <i
+												class="fa fa-refresh"></i> <p:spacer
+													style="margin-left:12px;" /> <h:outputText
+													value="#{painelFinanceiroBean.atrasado}">
+													<f:convertNumber type="currency" />
+												</h:outputText>
+
+
+											</a> <strong>Pendências:</strong> Pagamentos Atrasados.
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+
+
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+
+	<p:dialog header="Lançamento" widgetVar="edicaoDialog"
+		styleClass="modal-header" showEffect="fade" id="formulario-dialog"
+		resizable="false" modal="true" closeOnEscape="true">
+
+		<p:messages id="msgs-dialog" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+		<p:defaultCommand target="salvar-button" scope="formulario-dialog" />
+
+		<p:panelGrid columns="2" id="painel-dialog" styleClass="semBorda">
+
+			<p:outputLabel value="Categoria" />
+
+			<p:selectOneMenu id="cat" style="width:100%;" filter="true"
+				required="true" converter="omnifaces.SelectItemsConverter"
+				value="#{despesaBean.financeiroEdicao.categoria}">
+				<f:selectItem itemLabel="Selecione a Categoria" />
+				<f:selectItems value="#{despesaBean.listarCategorias}" var="var"
+					itemLabel="#{var.descricao}" itemValue="#{var}" />
+			</p:selectOneMenu>
+
+
+			<p:outputLabel value="Valor" />
+
+			<p:inputText id="valor" size="60" maxlength="80"
+				styleClass="form-control" onkeydown="mascara(this,moeda)"
+				value="#{despesaBean.financeiroEdicao.valor}" required="true">
+				<f:convertNumber minFractionDigits="2" maxIntegerDigits="10" />
+
+			</p:inputText>
+
+			<p:outputLabel value="Forma de Pagamento:" />
+
+			<p:selectOneMenu id="forma"
+				value="#{despesaBean.financeiroEdicao.idFormaPagamento}">
+				<f:selectItem itemLabel="Selecione" itemValue="" />
+				<f:selectItem itemLabel="001 - Dinheiro" itemValue="1" />
+				<f:selectItem itemLabel="002 - Débito Automático" itemValue="2" />
+				<f:selectItem itemLabel="003 - Cartão de Crédito" itemValue="3" />
+				<f:selectItem itemLabel="004 - Cheque" itemValue="4" />
+			</p:selectOneMenu>
+
+
+			<p:outputLabel value="Data do Vencimento" />
+			<p:calendar value="#{despesaBean.financeiroEdicao.data}"
+				locale="pt" required="true" pattern="dd/MM/yyyy" />
+
+			<p:outputLabel value="Situação" />
+
+			<p:selectOneRadio id="pago"
+				value="#{despesaBean.financeiroEdicao.flag}" required="true">
+				<f:selectItem itemLabel="Sim" itemValue="1" />
+				<f:selectItem itemLabel="Não" itemValue="2" />
+
+			</p:selectOneRadio>
+
+
+			<p:outputLabel value="Movimentar" />
+
+			<p:selectOneMenu id="caixa" style="width:100%;" filter="true"
+				filterMatchMode="content" required="true"
+				converter="omnifaces.SelectItemsConverter"
+				value="#{despesaBean.financeiroEdicao.caixa}">
+				<f:selectItem itemLabel="Selecione o Caixa" />
+				<f:selectItems value="#{despesaBean.listarCaixas}" var="var"
+					itemLabel="#{var.descricao}" itemValue="#{var}" />
+			</p:selectOneMenu>
+
+
+
+			<p:outputLabel value="Descrição" />
+
+			<p:inputTextarea value="#{despesaBean.financeiroEdicao.descricao}"
+				style="width:100%" />
+
+
+
+
+			<p:outputLabel />
+			<p:outputLabel />
+
+			<p:commandButton value="Lançar" id="salvar-button"
+				icon="fa fa-check" action="#{despesaBean.salvar}"
+				process="formulario-dialog"
+				update=":frm:financeiroTable :frm:msgs :frm:msgs-dialog :frm:painel-dialog "
+				oncomplete="if (!args.validationFailed) PF('edicaoDialog').hide()"
+				styleClass="btn btn-default	 "
+				style="padding:5px;
+                               font-weight: normal !important; 
+                               color: #666 !important;" />
+
+
+
+
+		</p:panelGrid>
+	</p:dialog>
+
+
+
+
+
+</ui:composition>

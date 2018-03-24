@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mapaLocal" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5bb4bed-bc5c-4a4d-b89a-cb455e2c54f7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT id,nome,latitude,longitude FROM Mapa order by id desc]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="latitude" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="longitude" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="0" width="552" height="36" uuid="402cfd8a-9908-42df-9a3e-fb090c740727"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Localização de Alunos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="13" width="555" height="20" forecolor="#4376A3" backcolor="#4376A3" uuid="ac7001c7-5157-4190-9b60-e1a2db2903ee"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="205" splitType="Stretch">
+			<textField>
+				<reportElement x="87" y="15" width="135" height="20" uuid="74eed821-425e-495a-b570-fc1ade9893f6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="34" width="135" height="20" uuid="de0d5903-46e5-420a-b740-8c4bf289721a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{latitude}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="14" width="79" height="20" uuid="62b2df70-4d19-4bf0-bcc4-aa6960e7b907"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="34" width="79" height="20" uuid="f831b2ad-5fe2-40a7-9e39-a26962d8203d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Latitude:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="53" width="79" height="20" uuid="8f2fee8e-3b4d-47ee-a62e-7d70f7ccd32d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitude:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="54" width="135" height="20" uuid="e4141057-7522-493a-a549-c3d06438c953"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{longitude}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="196" width="552" height="1" uuid="a88e4992-ff1e-468b-9bcd-7b69caeef905"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

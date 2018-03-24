@@ -1,0 +1,188 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+
+<p:dataTable var="financeiro" id="tab" rows="10"
+										paginatorPosition="bottom" editable="true" editMode="cell"
+										value="#{financeiroCrossBean.listaFinanceiros}"
+										widgetVar="financeiroTable"
+										emptyMessage="Nenhuma Registro cadastrado até o momento ...."
+										paginator="true" rowsPerPageTemplate="15,20,30"
+										selectionMode="single" rowKey="#{financeiro.id}">
+
+
+
+										<f:facet name="header">
+											<p:outputPanel>
+												<p:panelGrid columns="5" styleClass="semBorda">
+
+													<p:outputLabel value="Período de" />
+													<p:calendar locale="pt" navigator="true" pages="2"
+														value="#{financeiroCrossBean.financeiro.dataInicio}"
+														pattern="dd/MM/yyyy" />
+
+													<p:outputLabel value="Até" />
+													<p:calendar locale="pt" navigator="true" pages="2"
+														value="#{financeiroCrossBean.financeiro.dataFim}"
+														pattern="dd/MM/yyyy" />
+
+													<p:commandButton styleClass="btn btn-info" ajax="false"
+														value="Pesquisar" icon="fa fa-search"
+														action="#{financeiroCrossBean.consultarPriodo}" />
+
+
+												</p:panelGrid>
+											</p:outputPanel>
+										</f:facet>
+
+										<p:column headerText="@"
+											style="width:50px; text-align:center;">
+											<h:graphicImage value="../resources/img/despesa.png"
+												rendered="#{financeiro.tipo eq '2'}" />
+											<h:graphicImage value="../resources/img/receita.png"
+												rendered="#{financeiro.tipo eq '1'}" />
+
+										</p:column>
+
+										<p:column headerText="Status"
+											style="width:80px; text-align:left;">
+
+											<p:cellEditor>
+												<f:facet name="output">
+
+													<span class="label label-success"><h:outputText
+															value="PAGO" style="color:#fff"
+															rendered="#{financeiro.flag eq '1'}" /></span>
+
+													<span class="label label-danger"><h:outputText
+															style="color:#fff" value="EM ABERTO "
+															rendered="#{financeiro.flag eq '2'}" /></span>
+
+												</f:facet>
+
+												<f:facet name="input">
+													<p:selectOneMenu value="#{financeiro.flag}"
+														style="width:80px">
+														<f:selectItem itemLabel="SIM" itemValue="1" />
+														<f:selectItem itemLabel="NÃO" itemValue="2" />
+													</p:selectOneMenu>
+												</f:facet>
+											</p:cellEditor>
+
+										</p:column>
+
+										<p:column headerText="Cliente"
+											sortBy="#{financeiro.aluno.nome}"
+											filterBy="#{financeiro.aluno.nome}"
+											filterable="#{financeiro.aluno.nome}"
+											style="width:80px; text-align:left;">
+
+											<h:outputLabel value="#{financeiro.aluno.nome}"
+												style="font-weight: 600;" />
+										</p:column>
+
+
+
+										<p:column headerText="Categoria"
+											sortBy="#{financeiro.categoria.descricao}"
+											filterBy="#{financeiro.categoria.descricao}"
+											filterable="#{financeiro.categoria.descricao}"
+											style="width:100px; text-align:left;">
+
+											<h:outputLabel value="#{financeiro.categoria.descricao}"
+												style="font-weight: 600;" />
+										</p:column>
+
+
+										<p:column headerText="Vencimento" sortBy="#{financeiro.data}"
+											filterBy="#{financeiro.data}" filterable="financeiro.data"
+											style="width:80px; text-align:center;">
+											<i class="fa fa-calendar" />
+											<p:spacer style="margin-left:10px;" />
+											<h:outputText value="#{financeiro.data}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+
+										</p:column>
+
+										<p:column headerText="Previsão"
+											style="width:150px; text-align:left;">
+											<span class="label label-success"><h:outputText
+													value="DIA DO PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq 'DIA DO PAGAMENTO'}" /></span>
+
+											<span class="label label-info"><h:outputText
+													value="AQUARDANDO PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq 'AQUARDANDO PAGAMENTO'}" /></span>
+
+											<span class="label label-warning"><h:outputText
+													value="05 DIAS PARA O PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq '05 DIAS PARA O PAGAMENTO'}" /></span>
+
+											<span class="label label-warning"><h:outputText
+													value="04 DIAS PARA O PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq '04 DIAS PARA O PAGAMENTO'}" /></span>
+
+											<span class="label label-warning"><h:outputText
+													value="03 DIAS PARA O PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq '03 DIAS PARA O PAGAMENTO'}" /></span>
+
+											<span class="label label-success"><h:outputText
+													value="02 DIAS PARA O PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq '02 DIAS PARA O PAGAMENTO'}" /></span>
+
+
+											<span class="label label-default"><h:outputText
+													value="FALTA UM DIA PARA O PAGAMENTO !" style="color:#fff"
+													rendered="#{financeiro.dia eq 'FALTA UM DIA PARA O PAGAMENTO'}" /></span>
+
+											<span class="label label-danger"><h:outputText
+													value="PAGAMENTO ATRASADO !" style="color:#fff"
+													rendered="#{financeiro.dia eq 'ATRASADO'}" /></span>
+
+
+										</p:column>
+
+
+
+										<p:column headerText="Valor"
+											style="width:80px; text-align:left; ">
+
+											<h:outputLabel value="#{financeiro.valor}"
+												style="font-weight: 600;">
+												<f:convertNumber type="currency" minFractionDigits="2" />
+											</h:outputLabel>
+										</p:column>
+
+
+
+										<p:columnGroup type="footer">
+											<p:row>
+												<p:column colspan="6" footerText="Valor Total:"
+													style="text-align:right; font-size:small;font-weight; " />
+
+												<p:column colspan="1" footerText="R$"
+													style="text-align:left; font-size:small;font-weight; ">
+
+													<f:facet name="footer">
+														<h:outputText style="text-align:left"
+															value="#{financeiroCrossBean.valorTotal}">
+															<f:convertNumber type="currency" />
+														</h:outputText>
+													</f:facet>
+
+
+												</p:column>
+											</p:row>
+										</p:columnGroup>
+
+										
+
+									</p:dataTable>
+
+
+
+</ui:composition>

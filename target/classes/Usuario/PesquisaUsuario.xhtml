@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+		<f:metadata>
+			<o:viewParam name="autoEscola"
+				value="#{cadastroAutoEscolaBean.autoEscola}" />
+
+		</f:metadata>
+
+
+		<h:form id="frm" prependId="false">
+
+			<h:inputHidden id="idautoEscola"
+				value="#{cadastroAutoEscolaBean.autoEscola.id}" readonly="true" />
+
+
+			<h3 class="page-title">
+				<i class="icon-lock-open" style="color: #1caf9a; font-size: 23px" /> Usuário
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Lista
+												de usuários </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">últimos
+												cadastros </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:button value="Novo" icon="fa fa-plus" id="btn1"
+												styleClass="btn btn-sm green" outcome="CadastroUsuario" />
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:commandButton icon="fa fa-download" 
+												process="@this" 
+												styleClass="btn btn-sm  " />
+
+
+
+											<p:spacer style="margin-left:10px" />
+
+											
+											
+											<p:commandButton icon="fa fa-upload"
+												process="@this" 
+												styleClass="btn btn-sm default " />
+
+
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+							</div>
+
+							<p:dataTable value="#{pesquisaUsuarioBean.usuarios}"
+								reflow="true"
+								filteredValue="#{pesquisaUsuarioBean.pesquisaUsuario}"
+								var="usuario" widgetVar="usuarioTable"
+								emptyMessage="Nenhum Arquivo Cadastrado...." rows="10"
+								paginator="true" paginatorPosition="bottom"
+								style="margin-top: 10px" id="pesquisausuarioDT"
+								selection="#{pesquisaUsuarioBean.usuarioSelecionado}"
+								selectionMode="single" rowKey="#{usuario.id}">
+
+								<f:facet name="header">
+									<p:outputPanel>
+
+										<p:inputText id="globalFilter"
+											onkeyup="PF('usuarioTable').filter()" style="width:250px"
+											placeholder="Pesquisar" />
+									</p:outputPanel>
+								</f:facet>
+
+
+								<p:column headerText="Código"
+									style="width:80px; text-align:center;">
+									<h:outputText value="#{usuario.id}" />
+								</p:column>
+
+								<p:column headerText="Usuário"
+									filterBy="#{usuario.nomeCompleto}">
+									<h:outputText value="#{usuario.nomeCompleto}" />
+								</p:column>
+
+
+								<p:column headerText="Auto Escola"
+									filterBy="#{usuario.autoescola.nome}">
+									<h:outputText value="#{usuario.autoescola.nome}" />
+								</p:column>
+
+
+								<p:column headerText="Logo"
+									filterBy="#{usuario.autoescola.logo}">
+									<h:outputText value="#{usuario.autoescola.logo}" />
+								</p:column>
+
+
+
+								<p:column style="width: 160px; text-align: center"
+									headerText="Ações">
+
+									<p:button outcome="AlterarSenhaUsuario" icon="fa fa-refresh" styleClass="btn btn-xs purple"
+										title="Alterar Senha Usuário">
+										<f:param name="usuario" value="#{usuario.id}" />
+									</p:button>
+
+									<p:button outcome="CadastroUsuario" icon="fa fa-pencil" styleClass="btn btn-xs yellow"
+										title="Editar">
+										<f:param name="usuario" value="#{usuario.id}" />
+									</p:button>
+
+									<p:commandButton icon="fa fa-trash" title="Excluir" styleClass="btn btn-xs red"
+										oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+										update=":frm:confirmacaoExclusaoDialog">
+										<f:setPropertyActionListener
+											target="#{pesquisaUsuarioBean.usuarioSelecionado}"
+											value="#{usuario}" />
+									</p:commandButton>
+								</p:column>
+								
+							
+
+							</p:dataTable>
+
+
+							<p:confirmDialog id="confirmacaoExclusaoDialog"
+								widgetVar="confirmacaoExclusao"
+								message="Tem certeza que deseja excluir o Usuário #{pesquisaUsuarioBean.usuarioSelecionado.nomeCompleto}?"
+								header="Exclusão de Usuário" severity="alert">
+								<p:button value="Não" styleClass="btn btn-xs red" icon="fa fa-close"
+									onclick="PF('confirmacaoExclusao').hide(); return false;" />
+								<p:commandButton value="Sim" update=":frm:pesquisausuarioDT" styleClass="btn btn-xs blue" icon="fa fa-check"
+									onclick="confirmacaoExclusao.hide()"
+									action="#{pesquisaUsuarioBean.excluir}" />
+							</p:confirmDialog>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>

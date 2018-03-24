@@ -1,0 +1,185 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	template="/templates/Layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+		<f:metadata>
+			<o:viewParam name="usuario"
+				value="#{alterarSenhaUsuarioLogadoBean.usuario}" />
+		</f:metadata>
+
+		<h:form id="frm" prependId="false">
+
+
+			<h3 class="page-title">
+				<i class="icon-lock-open" style="color: #1caf9a; font-size: 23px" />
+				Usuário
+			</h3>
+
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+
+					<div class="portlet light ">
+						<div class="portlet-title">
+
+							<p:messages id="msgs" closable="true">
+								<p:effect type="pulsate" event="load" delay="500" />
+							</p:messages>
+
+
+
+							<div class="portlet">
+								<div class="portlet-title">
+
+
+									<p:toolbar id="toolbar"
+										style="margin-top: 10px; background-color:#fff;">
+
+										<p:toolbarGroup align="left">
+
+											<span style="font-size: 12px; font-weight: 100;"
+												class="caption-subject font-green-sharp bold uppercase">Aterar
+												Senha </span>
+											<span class="caption-helper"
+												style="font-size: 10px; font-weight: 100; color: #b7b7b7">Usuário
+												logado </span>
+											<p />
+										</p:toolbarGroup>
+
+										<p:toolbarGroup align="right">
+											<p:commandButton value="Alterar" icon="fa fa-refresh"
+												id="btn1" styleClass="btn btn-sm blue" ajax="false"
+												action="#{alterarSenhaUsuarioLogadoBean.salvar}"
+												process="@this" update="frm:msgs" />
+
+
+
+											<span class="ui-separator"> <span
+												class="ui-icon ui-icon-grip-dotted-vertical" />
+											</span>
+
+
+											<p:button type="button" value="Pesquisar" icon="fa fa-search"
+												outcome="PesquisaUsuario" styleClass="btn btn-sm green" />
+
+
+										</p:toolbarGroup>
+
+									</p:toolbar>
+
+								</div>
+
+
+							</div>
+							<div class="portlet box blue-hoki">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="fa fa-lock"></i>Preencha as informações
+									</div>
+									<div class="tools">
+										<a href="javascript:;" class="collapse"> </a> <a
+											href="#portlet-config" data-toggle="modal" class="config">
+										</a> <a href="javascript:;" class="reload"> </a> <a
+											href="javascript:;" class="remove"> </a>
+									</div>
+								</div>
+								<div class="portlet-body form">
+
+									<div class="portlet-title">
+
+										<div class="col-md-6">
+											<div class="form-group form-md-line-input has-success">
+
+												<div class="input-icon right">
+
+													<p:inputText  styleClass="form-control" id="login"
+														maxlength="255" style="color:#26a69a; width:100%;"
+														value="#{alterarSenhaUsuarioLogadoBean.usuario.login}"
+														required="true" readonly="true"
+														requiredMessage="Login deve ser informado." />
+															<i class="icon-user" />
+
+
+
+												</div>
+
+												<p:spacer style="margin-bottom:7px" />
+
+
+
+												<div class="input-icon right">
+
+													<p:password placeholder="Senha Atual:"
+														styleClass="form-control" id="novaAtual" size="20"
+														value="#{alterarSenhaUsuarioLogadoBean.usuario.senhaAtual}"
+														match="senha2" required="true"
+														validatorMessage="Senha não confere"
+														requiredMessage="Nova Senha deve ser informada" />
+
+													<i class="icon-lock" />
+
+												</div>
+
+												<p:spacer style="margin-bottom:7px" />
+
+
+												<div class="input-icon right">
+
+													<p:password placeholder="Nova Senha:"
+														styleClass="form-control" id="novaSenha" size="20"
+														value="#{alterarSenhaUsuarioLogadoBean.usuario.novaSenha}"
+														match="senha2" required="true"
+														validatorMessage="Senha não confere"
+														requiredMessage="Nova Senha deve ser informada" />
+													<i class="icon-key" />
+
+												</div>
+
+												<p:spacer style="margin-bottom:7px" />
+
+												<div class="input-icon right">
+
+													<p:password placeholder="Confirmar Senha:"
+														styleClass="form-control" id="senha2" size="20"
+														label="Confirmar Senha" required="true"
+														requiredMessage="Confirmar senha deve ser informada" />
+													<i class="icon-check" />
+
+												</div>
+
+												<p:spacer style="margin-bottom:5px" />
+
+
+											</div>
+
+										</div>
+
+
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+
+
+
+
+	</ui:define>
+
+</ui:composition>
